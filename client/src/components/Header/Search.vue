@@ -60,10 +60,10 @@
       line-height: 1.4;
 
       @media (max-width: 1024px) {
-        font-size: 3.2rem;
+        font-size: 2.8rem;
       }
 
-      @media (max-width: 360px) {
+      @media (max-width: 480px) {
         font-size: 2.4rem;
       }
     }
@@ -75,6 +75,10 @@
       display: flex;
       align-items: center;
       width: 100%;
+
+      @media (max-width: 480px) {
+        padding: 0.5rem;
+      }
 
       &:hover {
         box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1);
@@ -95,8 +99,8 @@
           font-weight: 300;
           font-size: 1.8rem;
 
-          @media (max-width: 450px) {
-            font-size: 1.6rem;
+          @media (max-width: 480px) {
+            font-size: 1.4rem;
           }
         }
       }

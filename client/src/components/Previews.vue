@@ -1,6 +1,9 @@
 <template>
   <section class="previews">
-    <h2 class="news">Derniers ajouts</h2>
+    <div class="section-title">
+      <h2 class="news">Derniers ajouts</h2>
+      <button class="btn btn--see-all">Tout voir</button>
+    </div>
     <div class="cards">
       <div class="card">
         <div class="image">
@@ -59,8 +62,8 @@
         </div>
         <div class="bottom">
           <div class="infos">
-            <div class="title">Titre du beat</div>
-            <div class="author">Auteur du beat</div>
+            <div class="title">Titre du beat2</div>
+            <div class="author">Auteur du beat2</div>
           </div>
           <button class="btn btn--buy">
             <span>23, 99€</span>
@@ -168,35 +171,15 @@
         </div>
       </div>
     </div>
+    <button class="btn btn--see-all--secondary">Tout voir</button>
   </section>
 </template>
 
 <script>
 export default {
   methods: {
-    play(e) {
-      const audio = e.currentTarget.nextSibling;
-      const allBtn = document.querySelectorAll(".btn--play");
-      const isPlaying = e.currentTarget.classList.contains("active");
-
-      for (const btn of allBtn) {
-        if (btn.classList.contains("active")) {
-          btn.classList.remove("active");
-          btn.nextSibling.pause();
-        }
-
-        if (btn !== e.currentTarget) {
-          btn.nextSibling.currentTime = 0;
-        }
-      }
-
-      if (isPlaying) {
-        e.currentTarget.classList.remove("active");
-        audio.pause();
-      } else {
-        e.currentTarget.classList.add("active");
-        audio.play();
-      }
+    play() {
+      document.querySelector(".player").classList.add("playing");
     }
   }
 };
@@ -205,10 +188,45 @@ export default {
 <style lang="scss" scoped>
 .previews {
   margin-top: 8rem;
-  padding: 3rem 6rem;
 
-  @media (max-width: 680px) {
-    padding: 3rem 2rem;
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 480px) {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .news {
+      @media (max-width: 1024px) {
+        font-size: 2.8rem;
+      }
+      @media (max-width: 480px) {
+        font-size: 2.4rem;
+      }
+    }
+    .btn--see-all {
+      border: 1px solid $color-white;
+      padding: 1.2rem 2rem;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      transition: 0.2s ease-out;
+
+      @media (max-width: 480px) {
+        display: none;
+
+        .btn--see-all--secondary {
+          display: block;
+        }
+      }
+
+      &:hover {
+        letter-spacing: 2px;
+      }
+    }
   }
 
   .news {
@@ -222,14 +240,9 @@ export default {
     flex-wrap: wrap;
 
     .card {
-      color: $color-black;
       border-radius: 3px;
       width: 250px;
-      margin: 4rem;
-
-      @media (max-width: 350px) {
-        margin: 4rem 0;
-      }
+      margin: 4rem 2rem;
 
       .image {
         border-radius: 2px;
@@ -288,7 +301,6 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
         margin-top: 1rem;
 
         .infos {
@@ -317,14 +329,9 @@ export default {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          border: none;
-          background: none;
-          outline: none;
-          cursor: pointer;
           background: rgb(216, 25, 25);
           font-weight: 600;
-          font-family: "Roboto", sans-serif;
-          color: #fff;
+
           padding: 1rem 2rem;
           border-radius: 5px;
           font-size: 1.3rem;
@@ -344,6 +351,20 @@ export default {
           }
         }
       }
+    }
+  }
+  .btn--see-all--secondary {
+    display: none;
+    border: 1px solid $color-white;
+    padding: 1.2rem 2rem;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    transition: 0.2s ease-out;
+    margin: 0 auto;
+
+    @media (max-width: 480px) {
+      display: block;
     }
   }
 }

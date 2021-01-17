@@ -19,8 +19,7 @@ export default {
 .footer {
   text-align: center;
   margin: 5rem auto 3rem auto;
-  padding: 0 6rem;
-  font-size:1.4rem;
+  font-size: 1.4rem;
 
   .legal-notices-link {
     color: $color-white;

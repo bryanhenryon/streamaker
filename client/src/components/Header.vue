@@ -39,7 +39,7 @@ export default {
   padding: 3rem 6rem;
 
   @media (max-width: 680px) {
-    padding: 3rem 2rem;
+    padding: 2rem 2rem;
   }
 
   .header-content-wrapper {

@@ -1,11 +1,11 @@
 <template>
   <nav class="navbar">
-    <div class="logo">LOGO / NOM DU SITE</div>
+    <div class="navbar_logo">LOGO / NOM DU SITE</div>
     <div class="navbar_buttons">
       <button class="btn btn-buy">Achète des prods</button>
       <button class="btn btn-sell">Vends des prods</button>
     </div>
-    <button class="btn-menu">
+    <button class="btn btn--menu">
       <svg class="icon icon-menu">
         <use xlink:href="sprite.svg#icon-menu"></use>
       </svg>
@@ -20,20 +20,24 @@
   align-items: center;
   font-size: 2rem;
 
+  &_logo {
+    margin-right: 1rem;
+    @media (max-width: 1024px) {
+      font-size: 1.8rem;
+    }
+  }
+
   &_buttons {
-    @media (max-width: 680px) {
+    @media (max-width: 768px) {
       display: none;
     }
   }
 
-  .btn-menu {
+  .btn--menu {
     display: none;
-    background: none;
-    outline: none;
-    border: none;
-    cursor: pointer;
+    padding: 0 !important;
 
-    @media (max-width: 680px) {
+    @media (max-width: 768px) {
       display: block;
     }
 
@@ -45,15 +49,15 @@
   }
 
   .btn {
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1.6rem;
     padding: 1.2rem 2rem;
     text-transform: uppercase;
     transition: 0.2s ease-out;
     letter-spacing: 1px;
-    font-family: "Roboto", sans-serif;
+    font-size: 1.6rem;
+
+    @media (max-width: 1024px) {
+      font-size: 1.4rem;
+    }
   }
 
   .btn:hover {
