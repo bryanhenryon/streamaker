@@ -2,7 +2,7 @@
   <section class="previews">
     <div class="section-title">
       <h2 class="news">Derniers ajouts</h2>
-      <button class="btn btn--see-all">Tout voir</button>
+      <router-link to="/tracks" class="btn btn--see-all">Tout voir</router-link>
     </div>
     <div class="cards">
       <div class="card">
@@ -171,7 +171,9 @@
         </div>
       </div>
     </div>
-    <button class="btn btn--see-all--secondary">Tout voir</button>
+    <router-link to="/tracks" class="btn btn--see-all--secondary"
+      >Tout voir</router-link
+    >
   </section>
 </template>
 
@@ -214,6 +216,7 @@ export default {
       font-size: 1.4rem;
       letter-spacing: 1px;
       transition: 0.2s ease-out;
+      text-decoration: none;
 
       @media (max-width: 480px) {
         display: none;
@@ -353,6 +356,7 @@ export default {
       }
     }
   }
+
   .btn--see-all--secondary {
     display: none;
     border: 1px solid $color-white;
@@ -361,7 +365,8 @@ export default {
     font-size: 1.4rem;
     letter-spacing: 1px;
     transition: 0.2s ease-out;
-    margin: 0 auto;
+    text-decoration: none;
+    text-align: center;
 
     @media (max-width: 480px) {
       display: block;

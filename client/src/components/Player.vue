@@ -6,6 +6,7 @@
           <img
             src="https://zerojackerzz.com/wp-content/uploads/2019/10/album-placeholder.png"
             alt=""
+            draggable="false"
           />
         </div>
         <div class="track-infos__container">
