@@ -249,7 +249,7 @@ export default {
         if (radio.checked) {
           if (radio.value !== "all") {
             axios
-              .get("http://localhost:3000/api/prods", {
+              .get("/api/prods", {
                 params: {
                   search: this.searchParams
                 }
@@ -274,7 +274,7 @@ export default {
               });
           } else {
             axios
-              .get("http://localhost:3000/api/prods")
+              .get("/api/prods")
               .then(res => {
                 const prods = res.data;
                 prods.length === 0
