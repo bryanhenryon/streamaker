@@ -24,7 +24,7 @@
           <div class="navbar__user-img-container">
             <img
               class="navbar__user-img"
-              :src="'img/' + user.profilePicture"
+              :src="`img/${user.profilePicture}`"
               alt="Image de profil"
             />
           </div>
@@ -151,8 +151,8 @@ export default {
     logout() {
       localStorage.removeItem("jwt");
       localStorage.removeItem("user");
-      this.$store.commit("setToken", null);
-      this.$store.commit("setUser", null);
+      this.$store.dispatch("setToken", null);
+      this.$store.dispatch("setUser", null);
       this.$router.push("/");
     }
   }
@@ -331,7 +331,7 @@ export default {
         a {
           color: inherit;
           text-decoration: none;
-          width:100%;
+          width: 100%;
         }
       }
     }

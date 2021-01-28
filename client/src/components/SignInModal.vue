@@ -88,8 +88,8 @@ export default {
           localStorage.setItem("jwt", res.data.token);
           localStorage.setItem("user", JSON.stringify(res.data.user));
 
-          this.$store.commit("setToken", localStorage.getItem("jwt"));
-          this.$store.commit(
+          this.$store.dispatch("setToken", localStorage.getItem("jwt"));
+          this.$store.dispatch(
             "setUser",
             JSON.parse(localStorage.getItem("user"))
           );

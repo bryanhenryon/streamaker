@@ -7,14 +7,13 @@ export default createStore({
     user: JSON.parse(localStorage.getItem("user"))
   },
   mutations: {
-    setToken(state, token) {
-      state.jwt = token;
-    },
-    setUser(state, user) {
-      state.user = user;
-    }
+    setToken: (state, token) => (state.jwt = token),
+    setUser: (state, user) => (state.user = user)
   },
-  actions: {},
+  actions: {
+    setToken: ({ commit }, token) => commit("setToken", token),
+    setUser: ({ commit }, user) => commit("setUser", user)
+  },
   modules: {
     signUpModal
   }

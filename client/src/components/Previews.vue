@@ -7,7 +7,7 @@
     <div class="cards">
       <div class="card" v-for="(prod, index) of latestProds" :key="index">
         <div class="image">
-          <img :src="'/img/' + prod.cover" draggable="false" alt="" />
+          <img :src="'img/' + prod.cover" draggable="false" alt="" />
           <button class="btn btn--play" @click="play">
             <svg class="icon icon-controller-play">
               <use xlink:href="sprite.svg#icon-controller-play"></use>
