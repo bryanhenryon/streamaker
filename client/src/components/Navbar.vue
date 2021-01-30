@@ -35,14 +35,12 @@
         </button>
         <div class="navbar__user-profile-dropdown-menu" v-if="jwt">
           <ul>
-            <li>
-              <router-link :to="'/profil/' + user.username.toLowerCase()">
-                <svg class="icon icon-user">
-                  <use xlink:href="sprite.svg#icon-user"></use>
-                </svg>
-                Profil
-              </router-link>
-            </li>
+            <router-link :to="'/profil/' + user.username.toLowerCase()">
+              <svg class="icon icon-user">
+                <use xlink:href="sprite.svg#icon-user"></use>
+              </svg>
+              Profil
+            </router-link>
             <li @click="logout">
               <svg class="icon icon-switch">
                 <use xlink:href="sprite.svg#icon-switch"></use>
@@ -308,6 +306,7 @@ export default {
 
       margin: 1rem 0;
 
+      a,
       li {
         width: 100%;
         padding: 1rem 2rem;
@@ -315,6 +314,8 @@ export default {
         cursor: pointer;
         display: flex;
         align-items: center;
+        color: inherit;
+        text-decoration: none;
 
         .icon-switch,
         .icon-user {
@@ -326,12 +327,6 @@ export default {
 
         &:hover {
           font-weight: 500;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-          width: 100%;
         }
       }
     }

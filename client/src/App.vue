@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view />
+    <router-view :key="$route.fullPath" />
     <app-sign-up-modal></app-sign-up-modal>
     <app-sign-in-modal></app-sign-in-modal>
     <app-player></app-player>

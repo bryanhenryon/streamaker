@@ -1,8 +1,12 @@
 <template>
-  <div class="profile" v-if="user">
+  <div class="profile" v-if="userProf && user">
     <app-navbar></app-navbar>
-    <h1>Profil de {{ user.username }}</h1>
-    <form class="new-prod" @submit.prevent="addProd">
+    <h1>Profil de {{ userProf.username }}</h1>
+    <form
+      class="new-prod"
+      @submit.prevent="addProd"
+      v-if="userProf._id === user._id"
+    >
       <label for="title">Titre de la prod</label>
       <input type="text" name="title" id="title" v-model="prod.title" />
 
@@ -28,7 +32,7 @@
         id="max-streams"
         v-model="prod.maxStreams"
       />
-      
+
       <button type="submit">Ajouter la prod</button>
     </form>
   </div>
@@ -37,11 +41,12 @@
 <script>
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      user: null,
+      userProf: null,
       prod: {
         title: null,
         song: null,
@@ -52,6 +57,9 @@ export default {
         maxStreams: null
       }
     };
+  },
+  computed: {
+    ...mapState(["user"])
   },
   components: {
     "app-navbar": Navbar
@@ -96,7 +104,7 @@ export default {
       .get("/api/users/" + this.$route.params.username)
       .then(res => {
         if (res.data === null) this.$router.push("/"); // rediriger vers page 404
-        this.user = res.data;
+        this.userProf = res.data;
       })
       .catch(err => {
         console.log(err);
