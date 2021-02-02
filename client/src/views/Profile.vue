@@ -97,9 +97,7 @@
         <div class="bottom">
           <div class="infos">
             <div class="title">
-              <div
-                class="title-link"
-                >{{ prod.title }}</div>
+              {{ prod.title }}
             </div>
             <div class="author">
               <router-link
@@ -120,6 +118,7 @@
         </div>
       </div>
     </div>
+    <app-footer></app-footer>
   </div>
 </template>
 
@@ -127,10 +126,12 @@
 import { mapState } from "vuex";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default {
   components: {
-    "app-navbar": Navbar
+    "app-navbar": Navbar,
+    "app-footer": Footer
   },
   data() {
     return {

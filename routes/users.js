@@ -29,7 +29,10 @@ router.post("/api/users", async (req, res) => {
         await user.save();
         const token = createToken(user);
         res.status(201).send({
-            user,
+            user: {
+                username: user.username,
+                profilePicture: user.profilePicture
+            },
             token
         });
     } catch (error) {
@@ -42,12 +45,14 @@ router.post("/api/users/login", async (req, res) => {
         const user = await Users.findByCredentials(req.body.username, req.body.password);
         const token = createToken(user._id);
         res.status(200).send({
-            user,
+            user: {
+                username: user.username,
+                profilePicture: user.profilePicture
+            },
             token
         });
     } catch (error) {
-        res.status(400).send();
-        console.log(error);
+        res.status(400).json({error: "Les identifiants sont incorrects, veuillez vérifier vos informations (attention aux majuscules)"});
     }
 });
 

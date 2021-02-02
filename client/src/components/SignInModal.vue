@@ -11,6 +11,7 @@
       </button>
       <div class="sign-in-modal__content-wrapper">
         <h2 class="sign-in-modal__header">Connexion</h2>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
         <form class="sign-in-modal__form" @submit.prevent="signIn">
           <div class="sign-in-modal__form-group">
             <svg class="icon icon-user">
@@ -68,14 +69,16 @@
 </template>
 
 <script>
+import { mapFields } from "vuex-map-fields";
+import { mapGetters } from "vuex";
 import axios from "axios";
 import "animate.css";
 export default {
-  data() {
-    return {
-      username: "",
-      password: ""
-    };
+  computed: {
+    ...mapGetters("signInModal", {
+      errorMessage: "getErrorMessage"
+    }),
+    ...mapFields("signInModal", ["username", "password"])
   },
   methods: {
     signIn() {
@@ -85,6 +88,8 @@ export default {
           password: this.password
         })
         .then(res => {
+          this.$store.dispatch("signInModal/resetForm");
+
           localStorage.setItem("jwt", res.data.token);
           localStorage.setItem("user", JSON.stringify(res.data.user));
 
@@ -97,10 +102,16 @@ export default {
           const signInModal = document.querySelector(".sign-in-modal");
           signInModal.classList.remove("active");
         })
-        .catch();
+        .catch(error => {
+          this.$store.dispatch(
+            "signInModal/setErrorMessage",
+            error.response.data.error
+          );
+        });
     },
     closeSignInModal() {
       document.querySelector(".sign-in-modal").classList.remove("active");
+      this.$store.dispatch("signInModal/resetForm");
     },
     showSignUpModal() {
       const signUpModal = document.querySelector(".sign-up-modal");
@@ -117,6 +128,8 @@ export default {
 
       signInModal.classList.remove("active");
       signUpModal.classList.add("active");
+
+      this.$store.dispatch("signInModal/resetForm");
 
       if (signUpModal.classList.contains("active")) {
         window.addEventListener("click", e => {
@@ -200,8 +213,17 @@ export default {
 
   &__header {
     font-size: 3.6rem;
-
     margin-bottom: 3rem;
+  }
+
+  .error-message {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
   }
 
   &__form-group {

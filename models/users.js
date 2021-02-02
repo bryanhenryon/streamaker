@@ -68,7 +68,7 @@ const usersSchema = new mongoose.Schema({
 
 usersSchema.statics.findByCredentials = async (username, password) => {
   const user = await Users.findOne({ 
-    username: { $regex : new RegExp(username, "i") }
+    username: username
    });
 
   if(!user) {

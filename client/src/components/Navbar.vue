@@ -39,7 +39,21 @@
               <svg class="icon icon-user">
                 <use xlink:href="sprite.svg#icon-user"></use>
               </svg>
-              Profil
+              Mon profil
+            </router-link>
+            <router-link to="/compte/infos">
+              <svg class="icon icon-user">
+                <svg class="icon icon-profile">
+                  <use xlink:href="sprite.svg#icon-profile"></use>
+                </svg>
+              </svg>
+              Mes informations
+            </router-link>
+            <router-link to="/compte/prods">
+              <svg class="icon icon-music-notes">
+                <use xlink:href="sprite.svg#icon-music-notes"></use>
+              </svg>
+              Mes prods
             </router-link>
             <li @click="logout">
               <svg class="icon icon-switch">
@@ -110,6 +124,7 @@ export default {
         window.addEventListener("click", e => {
           if (e.target === signInModal) {
             signInModal.classList.remove("active");
+            this.$store.dispatch("signInModal/resetForm");
           } else {
             return false;
           }
@@ -318,7 +333,9 @@ export default {
         text-decoration: none;
 
         .icon-switch,
-        .icon-user {
+        .icon-user,
+        .icon-music-notes,
+        .icon-profile {
           width: 16px;
           height: 16px;
           fill: $color-white;

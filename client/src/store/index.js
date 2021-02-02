@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import signUpModal from "./modules/signUpModal";
+import signInModal from "./modules/signInModal";
 
 export default createStore({
   state: {
@@ -15,6 +16,7 @@ export default createStore({
     setUser: ({ commit }, user) => commit("setUser", user)
   },
   modules: {
-    signUpModal
+    signUpModal,
+    signInModal
   }
 });

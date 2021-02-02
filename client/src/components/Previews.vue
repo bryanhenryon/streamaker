@@ -18,17 +18,12 @@
           </button>
           <audio class="audio">
             <source :src="'music/' + prod.song" type="audio/mpeg" />
+            <source :src="'music/' + prod.song" type="audio/wav" />
           </audio>
         </div>
         <div class="bottom">
           <div class="infos">
-            <div class="title">
-              <router-link
-                class="title-link"
-                :to="'/profil/' + prod.title.toLowerCase()"
-                >{{ prod.title }}</router-link
-              >
-            </div>
+            <div class="title">{{ prod.title }}</div>
             <div class="author">
               <router-link
                 class="author-profile-link"
@@ -37,6 +32,7 @@
               >
             </div>
             <div class="max-streams">Streams max: 100k</div>
+            <span class="format">{{ prod.format.toUpperCase() }}</span>
           </div>
           <button class="btn btn--buy">
             <span>{{ prod.price }}€</span>
@@ -241,10 +237,6 @@ export default {
             font-weight: 500;
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
-
-            &:hover {
-              text-decoration: underline;
-            }
           }
 
           .author {
@@ -259,9 +251,18 @@ export default {
           .max-streams {
             font-size: 1.3rem;
             letter-spacing: 0.5px;
+            margin-bottom: 1rem;
           }
 
-          .title-link,
+          .format {
+            font-size: 1.2rem;
+            background: $color-white;
+            color: $color-black;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+          }
+
           .author-profile-link {
             color: $color-white;
             text-decoration: none;
