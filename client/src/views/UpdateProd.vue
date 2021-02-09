@@ -230,12 +230,13 @@ export default {
     }
   },
   created() {
-    axios
+      axios
       .get(
         "http://localhost:3000/api/prod/" + this.$route.params.id ||
           "/api/prod/" + this.$route.params.id
       )
       .then(res => {
+        if(res.data.artist === this.user.username) {
         this.prod.title = res.data.title;
         this.prod.song = res.data.song;
         this.prod.cover = res.data.cover;
@@ -250,9 +251,12 @@ export default {
           customCoverTxt.innerHTML = res.data.coverToDisplay;
         }
         customAudioTxt.innerHTML = res.data.songToDisplay;
+        } else {
+          this.$router.push("/compte/prods");
+        }
       })
       .catch(e => console.log(e));
-  }
+    }
 };
 </script>
 

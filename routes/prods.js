@@ -54,6 +54,7 @@ router.get("/api/prods", async (req, res) => {
 router.get("/api/prod/:id", async (req, res) => {
     try {
         const prod = await Prods.findOne({_id: req.params.id});
+
         const stringified = JSON.stringify(prod, null, 2);
         res.type('json').send(stringified);
     } catch (error) {
@@ -117,7 +118,7 @@ const storage = multer.diskStorage({
       storage
      });
 
-router.post("/api/prods", auth, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'song', maxCount: 1 }]), async (req, res) => {
+router.post("/api/prods", upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'song', maxCount: 1 }]), async (req, res) => {
     try {
         if(req.files.cover && req.files.cover[0].fieldname === "cover") {
             // if(req.files.cover[0].size > 1024 * 1024 * 5) {
@@ -166,6 +167,10 @@ router.patch("/api/prods/:id", auth, upload.fields([{ name: 'cover', maxCount: 1
 
         if(!prod) {
             return res.status(404).send("La prod n'existe pas");
+        }
+
+        if(prod.artist !== req.user.username) {
+            return res.status(401).send();
         }
 
         if(req.files.cover) {
