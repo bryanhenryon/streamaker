@@ -175,7 +175,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(["user", "jwt"])
   },
   components: {
     "app-navbar": Navbar,
@@ -202,7 +202,9 @@ export default {
       axios
         .delete(
           "http://localhost:3000/api/prods/" + prodToDelete._id ||
-            "/api/prods/" + prodToDelete._id
+            "/api/prods/" + prodToDelete._id, {
+              headers: { "Authorization": this.jwt }
+            }
         )
         .then(() => {
           this.hideConfirmModal();

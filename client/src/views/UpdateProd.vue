@@ -143,7 +143,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(["user", "jwt"])
   },
   components: {
     "app-navbar": Navbar,
@@ -190,7 +190,10 @@ export default {
           "http://localhost:3000/api/prods/" + this.$route.params.id ||
           "/api/prods/" + this.$route.params.id,
         data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { 
+          "Content-Type": "multipart/form-data",
+          "Authorization": this.jwt,
+          }
       })
         .then(() => {
           this.$router.push("/compte/prods");

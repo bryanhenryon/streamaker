@@ -107,7 +107,7 @@
           />
         </div>
         <div class="d-flex">
-          <button class="btn btn--cancel" @click="$router.go(-1)">
+          <button class="btn btn--cancel" type="button" @click="$router.go(-1)">
             Annuler
           </button>
           <button class="btn btn--add-prod" type="submit">
@@ -143,7 +143,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(["user", "jwt"])
   },
   components: {
     "app-navbar": Navbar,
@@ -188,7 +188,10 @@ export default {
         method: "post",
         url: "http://localhost:3000/api/prods" || "/api/prods",
         data: bodyFormData,
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { 
+          "Content-Type": "multipart/form-data",
+          "Authorization": this.jwt,
+           }
       })
         .then(() => {
           this.$router.push("/compte/prods");

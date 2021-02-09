@@ -3,6 +3,7 @@ const fs = require('fs')
 const express = require("express");
 const Prods = require("../models/prods");
 const multer = require("multer");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -116,7 +117,7 @@ const storage = multer.diskStorage({
       storage
      });
 
-router.post("/api/prods", upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'song', maxCount: 1 }]), async (req, res) => {
+router.post("/api/prods", auth, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'song', maxCount: 1 }]), async (req, res) => {
     try {
         if(req.files.cover && req.files.cover[0].fieldname === "cover") {
             // if(req.files.cover[0].size > 1024 * 1024 * 5) {
@@ -148,7 +149,7 @@ router.post("/api/prods", upload.fields([{ name: 'cover', maxCount: 1 }, { name:
 });
 
 
-router.patch("/api/prods/:id", upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'song', maxCount: 1 }]), async (req, res) => {
+router.patch("/api/prods/:id", auth, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'song', maxCount: 1 }]), async (req, res) => {
     try {
         if(req.files.cover && req.files.cover[0].fieldname === "cover") {
             req.body.cover = req.files.cover[0].filename;
@@ -193,11 +194,10 @@ router.patch("/api/prods/:id", upload.fields([{ name: 'cover', maxCount: 1 }, { 
         res.send(prodToUpdate);
     } catch (error) {
         res.status(400).send(error);
-        console.log(error);
     }
 });
 
-    router.delete("/api/prods/:id", async (req, res) => {
+    router.delete("/api/prods/:id", auth, async (req, res) => {
         const prodToDelete = await Prods.findById(req.params.id);
         await Prods.deleteOne(prodToDelete);
         
@@ -217,7 +217,7 @@ router.patch("/api/prods/:id", upload.fields([{ name: 'cover', maxCount: 1 }, { 
             }
         });
           
-        res.status(200).json({ message: "La prod a bien été supprimée" })
+        res.send();
     });
 
 module.exports = router;
