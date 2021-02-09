@@ -80,6 +80,10 @@ router.get("/api/prods/images/:filename", (req, res) => {
     res.sendFile(path.resolve('uploads/prods/covers/' + req.params.filename));
 });
 
+router.get("/api/prods/song/:filename", (req, res) => {
+    res.sendFile(path.resolve('uploads/prods/songs/' + req.params.filename));
+});
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

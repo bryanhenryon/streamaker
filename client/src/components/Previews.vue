@@ -24,8 +24,11 @@
             </svg>
           </button>
           <audio class="audio">
-            <source :src="'music/' + prod.song" type="audio/mpeg" />
-            <source :src="'music/' + prod.song" type="audio/wav" />
+            <source :src="
+            'http://localhost:3000/api/prods/song/' + prod.song ||
+            '/api/prods/song/' + prod.song" type="audio/mpeg" />
+            <source :src="'http://localhost:3000/api/prods/song/' + prod.song ||
+            '/api/prods/song/' + prod.song" type="audio/wav" />
           </audio>
         </div>
         <div class="bottom">
