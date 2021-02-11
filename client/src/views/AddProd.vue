@@ -178,7 +178,7 @@ export default {
 
       axios({
         method: "post",
-        url: "http://localhost:3000/api/prods" || "/api/prods",
+        url: "/api/prods",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",

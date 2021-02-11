@@ -176,7 +176,7 @@ export default {
 
       axios({
         method: "patch",
-        url: "http://localhost:3000/api/users/me" || "/api/users/me",
+        url: "/api/users/me",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -184,7 +184,7 @@ export default {
         }
       })
         .then(() => {
-          axios.get("http://localhost:3000/api/users/me" || "/api/users/me", {
+          axios.get("/api/users/me", {
             headers: {
               "Authorization": this.jwt
             }
@@ -222,7 +222,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:3000/api/users/me" || "/api/users/me", {
+      .get("/api/users/me", {
         headers: { Authorization: this.jwt }
       })
       .then(res => {

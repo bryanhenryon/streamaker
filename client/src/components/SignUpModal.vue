@@ -155,7 +155,7 @@ export default {
         this.validateConfirmPassword()
       ) {
         axios
-          .post("http://localhost:3000/api/users" || "/api/users", {
+          .post("/api/users", {
             username: this.username,
             email: this.email,
             password: this.password,

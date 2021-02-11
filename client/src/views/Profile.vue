@@ -264,7 +264,6 @@ export default {
     sortByLatest() {
       axios
         .get(
-          "http://localhost:3000/api/prods/" + this.$route.params.username ||
             "/api/prods/" + this.$route.params.username
         )
         .then(res => {
@@ -281,7 +280,6 @@ export default {
     sortByOldest() {
       axios
         .get(
-          "http://localhost:3000/api/prods/" + this.$route.params.username ||
             "/api/prods/" + this.$route.params.username
         )
         .then(res => {
@@ -299,7 +297,6 @@ export default {
       const searchValue = e.target.value.toLowerCase();
       axios
         .get(
-          "http://localhost:3000/api/prods/" + this.$route.params.username ||
             "/api/prods/" + this.$route.params.username
         )
         .then(res => {
@@ -359,7 +356,6 @@ export default {
   created() {
     axios
       .get(
-        "http://localhost:3000/api/users/" + this.$route.params.username ||
           "/api/users/" + this.$route.params.username
       )
       .then(res => (this.user = res.data))
@@ -367,7 +363,6 @@ export default {
 
     axios
       .get(
-        "http://localhost:3000/api/prods/" + this.$route.params.username ||
           "/api/prods/" + this.$route.params.username
       )
       .then(res => {

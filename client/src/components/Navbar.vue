@@ -24,7 +24,7 @@
           <div class="navbar__user-img-container">
             <img
               class="navbar__user-img"
-              :src="'http://localhost:3000/api/user/profile_picture/' + user.profilePicture || '/api/user/profile_picture/' + user.profilePicture"
+              :src="'/api/user/profile_picture/' + user.profilePicture"
               alt="Image de profil"
             />
           </div>

@@ -179,7 +179,6 @@ export default {
       axios({
         method: "patch",
         url:
-          "http://localhost:3000/api/prods/" + this.$route.params.id ||
           "/api/prods/" + this.$route.params.id,
         data: bodyFormData,
         headers: {
@@ -224,7 +223,6 @@ export default {
   created() {
     axios
       .get(
-        "http://localhost:3000/api/prod/" + this.$route.params.id ||
           "/api/prod/" + this.$route.params.id
       )
       .then(res => {

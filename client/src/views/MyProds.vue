@@ -184,7 +184,7 @@ export default {
   methods: {
     fetchUserProds() {
       axios
-        .get("http://localhost:3000/api/prods" || "/api/prods")
+        .get("/api/prods")
         .then(res => {
           const prods = res.data;
           const filteredProds = prods.filter(
@@ -201,7 +201,6 @@ export default {
     deleteProd(prodToDelete) {
       axios
         .delete(
-          "http://localhost:3000/api/prods/" + prodToDelete._id ||
             "/api/prods/" + prodToDelete._id,
           {
             headers: { Authorization: this.jwt }
@@ -224,8 +223,7 @@ export default {
       const searchValue = e.target.value.toLowerCase();
       axios
         .get(
-          "http://localhost:3000/api/prods/" + this.user.username ||
-            "/api/prods/" + this.user.username
+           "/api/prods/" + this.user.username
         )
         .then(res => {
           const prods = res.data;
@@ -273,7 +271,6 @@ export default {
     sortByLatest() {
       axios
         .get(
-          "http://localhost:3000/api/prods/" + this.user.username ||
             "/api/prods/" + this.user.username
         )
         .then(res => {
@@ -290,7 +287,6 @@ export default {
     sortByOldest() {
       axios
         .get(
-          "http://localhost:3000/api/prods/" + this.user.username ||
             "/api/prods/" + this.user.username
         )
         .then(res => {

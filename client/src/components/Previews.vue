@@ -123,7 +123,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:3000/api/prods" || "/api/prods")
+      .get("/api/prods")
       .then(res => {
         const data = res.data;
         const sortedData = data.sort((a, b) =>
