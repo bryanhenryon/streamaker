@@ -116,9 +116,7 @@
       <div class="card" v-for="(prod, index) of prods" :key="index">
         <div class="image">
           <img
-            :src="
-                process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
-            "
+            :src="apiRoot + 'prods/images/' + prod.cover"
             draggable="false"
             alt="Couverture du morceau"
           />
@@ -132,15 +130,11 @@
           </button>
           <audio class="audio">
             <source
-              :src="
-                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
-              "
+              :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/mpeg"
             />
             <source
-              :src="
-                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
-              "
+              :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/wav"
             />
           </audio>
@@ -179,12 +173,18 @@
 <script>
 import axios from "axios";
 import "animate.css";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       prods: null,
       noResults: false
     };
+  },
+  computed: {
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   methods: {
     showDropdownMenu() {
@@ -222,7 +222,7 @@ export default {
     searchProd(e) {
       const searchValue = e.target.value.toLowerCase();
       axios
-        .get(process.env.VUE_APP_API_URL + "prods")
+        .get(this.apiRoot + "prods")
         .then(res => {
           const prods = res.data;
 
@@ -263,7 +263,7 @@ export default {
         if (radio.checked) {
           if (radio.value !== "all") {
             axios
-              .get(process.env.VUE_APP_API_URL + "prods", {
+              .get(this.apiRoot + "prods", {
                 params: {
                   search: this.searchParams
                 }
@@ -288,7 +288,7 @@ export default {
               });
           } else {
             axios
-              .get(process.env.VUE_APP_API_URL + "prods")
+              .get(this.apiRoot + "prods")
               .then(res => {
                 const prods = res.data;
                 prods.length === 0
@@ -309,7 +309,7 @@ export default {
     },
     sortByLatest() {
       axios
-        .get(process.env.VUE_APP_API_URL + "prods")
+        .get(this.apiRoot + "prods")
         .then(res => {
           const prods = res.data;
           prods.length === 0
@@ -326,7 +326,7 @@ export default {
     },
     sortByOldest() {
       axios
-        .get(process.env.VUE_APP_API_URL + "prods")
+        .get(this.apiRoot + "prods")
         .then(res => {
           const prods = res.data;
           prods.length === 0
@@ -378,7 +378,7 @@ export default {
   },
   created() {
     axios
-      .get(process.env.VUE_APP_API_URL + "prods", {
+      .get(this.apiRoot + "prods", {
         params: {
           search: this.$route.query.search
         }
@@ -702,7 +702,7 @@ export default {
     border-radius: 3px;
     width: 250px;
     margin: 4rem 3rem;
-    word-break:break-word;
+    word-break: break-word;
 
     .image {
       border-radius: 2px;

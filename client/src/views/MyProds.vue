@@ -14,7 +14,7 @@
           <img
             class="confirm-modal__prod-img"
             :src="
-                process.env.VUE_APP_API_URL + 'prods/images/' + prodToDelete.cover
+              apiRoot + 'prods/images/' + prodToDelete.cover
             "
             alt="Couverture du morceau à supprimer"
           />
@@ -108,7 +108,7 @@
             <td data-label="Couverture">
               <img
                 :src="
-                   process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
+                  apiRoot + 'prods/images/' + prod.cover
                 "
                 alt="Couverture de la prod"
               />
@@ -160,7 +160,7 @@
 <script>
 import "animate.css";
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 export default {
@@ -173,7 +173,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "jwt"])
+    ...mapState(["user", "jwt"]),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   components: {
     "app-navbar": Navbar,
@@ -182,7 +185,7 @@ export default {
   methods: {
     fetchUserProds() {
       axios
-        .get(process.env.VUE_APP_API_URL + "prods")
+        .get(this.apiRoot + "prods")
         .then(res => {
           const prods = res.data;
           const filteredProds = prods.filter(
@@ -198,12 +201,9 @@ export default {
 
     deleteProd(prodToDelete) {
       axios
-        .delete(
-            process.env.VUE_APP_API_URL + "prods/" + prodToDelete._id,
-          {
-            headers: { Authorization: this.jwt }
-          }
-        )
+        .delete(this.apiRoot + "prods/" + prodToDelete._id, {
+          headers: { Authorization: this.jwt }
+        })
         .then(() => {
           this.hideConfirmModal();
           this.fetchUserProds();
@@ -220,9 +220,7 @@ export default {
     searchProd(e) {
       const searchValue = e.target.value.toLowerCase();
       axios
-        .get(
-          process.env.VUE_APP_API_URL + "prods/" + this.user.username
-        )
+        .get(this.apiRoot + "prods/" + this.user.username)
         .then(res => {
           const prods = res.data;
 
@@ -230,7 +228,9 @@ export default {
             data.title.toLowerCase().includes(searchValue)
           );
 
-          filteredProds.length === 0 ? this.noResult = true :this.noResult = false
+          filteredProds.length === 0
+            ? (this.noResult = true)
+            : (this.noResult = false);
 
           this.prods = filteredProds;
         })
@@ -268,9 +268,7 @@ export default {
     },
     sortByLatest() {
       axios
-        .get(
-            process.env.VUE_APP_API_URL + "prods/" + this.user.username
-        )
+        .get(this.apiRoot + "prods/" + this.user.username)
         .then(res => {
           const prods = res.data;
           const sortedProds = prods.sort((a, b) =>
@@ -284,9 +282,7 @@ export default {
     },
     sortByOldest() {
       axios
-        .get(
-            process.env.VUE_APP_API_URL + "prods/" + this.user.username
-        )
+        .get(this.apiRoot + "prods/" + this.user.username)
         .then(res => {
           const prods = res.data;
           const sortedProds = prods.sort((a, b) =>

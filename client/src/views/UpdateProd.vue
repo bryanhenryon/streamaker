@@ -122,7 +122,7 @@
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 export default {
@@ -143,7 +143,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "jwt"])
+    ...mapState(["user", "jwt"]),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   components: {
     "app-navbar": Navbar,
@@ -178,8 +181,7 @@ export default {
 
       axios({
         method: "patch",
-        url:
-          process.env.VUE_APP_API_URL + "prods/" + this.$route.params.id,
+        url: this.apiRoot + "prods/" + this.$route.params.id,
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -222,9 +224,7 @@ export default {
   },
   created() {
     axios
-      .get(
-        process.env.VUE_APP_API_URL + "prod/" + this.$route.params.id
-      )
+      .get(this.apiRoot + "prod/" + this.$route.params.id)
       .then(res => {
         if (res.data.artist === this.user.username) {
           this.prod.title = res.data.title;

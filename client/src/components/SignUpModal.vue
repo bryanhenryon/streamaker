@@ -122,6 +122,7 @@
 import "animate.css";
 import axios from "axios";
 import { mapFields } from "vuex-map-fields";
+import { mapGetters } from "vuex";
 
 export default {
   computed: {
@@ -134,7 +135,10 @@ export default {
       "emailErrorMessage",
       "passwordErrorMessage",
       "confirmPasswordErrorMessage"
-    ])
+    ]),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   methods: {
     closeSignUpModal() {
@@ -155,7 +159,7 @@ export default {
         this.validateConfirmPassword()
       ) {
         axios
-          .post(process.env.VUE_APP_API_URL + "users", {
+          .post(this.apiRoot + "users", {
             username: this.username,
             email: this.email,
             password: this.password,

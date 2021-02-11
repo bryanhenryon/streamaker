@@ -123,7 +123,7 @@
 <script>
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import axios from "axios";
 export default {
   data() {
@@ -143,7 +143,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "jwt"])
+    ...mapState(["user", "jwt"]),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   components: {
     "app-navbar": Navbar,
@@ -178,7 +181,7 @@ export default {
 
       axios({
         method: "post",
-        url: process.env.VUE_APP_API_URL + "prods",
+        url: this.apiRoot + "prods",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",

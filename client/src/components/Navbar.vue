@@ -24,7 +24,7 @@
           <div class="navbar__user-img-container">
             <img
               class="navbar__user-img"
-              :src="process.env.VUE_APP_API_URL + 'user/profile_picture/' + user.profilePicture"
+              :src="apiRoot + 'user/profile_picture/' + user.profilePicture"
               alt="Image de profil"
             />
           </div>
@@ -75,11 +75,14 @@
 
 <script>
 import "animate.css";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["jwt", "user"])
+    ...mapState(["jwt", "user"]),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   methods: {
     showSignUpModal() {
@@ -282,7 +285,7 @@ export default {
     width: 4rem;
     height: 4rem;
     margin-right: 1.5rem;
-    object-fit:cover;
+    object-fit: cover;
   }
 
   .icon-chevron-down--profile-dropdown-btn {

@@ -8,9 +8,7 @@
       <div class="card" v-for="(prod, index) of latestProds" :key="index">
         <div class="image">
           <img
-            :src="
-                process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
-            "
+            :src="apiRoot + 'prods/images/' + prod.cover"
             draggable="false"
             alt=""
           />
@@ -24,15 +22,11 @@
           </button>
           <audio class="audio">
             <source
-              :src="
-                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
-              "
+              :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/mpeg"
             />
             <source
-              :src="
-                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
-              "
+              :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/wav"
             />
           </audio>
@@ -71,6 +65,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import axios from "axios";
 import Player from "../components/Player";
 
@@ -79,6 +74,11 @@ export default {
     return {
       latestProds: null
     };
+  },
+  computed: {
+    ...mapGetters("global", {
+        apiRoot: "getApiRoot"
+    })
   },
   components: {
     "app-player": Player
@@ -120,7 +120,7 @@ export default {
   },
   created() {
     axios
-      .get(process.env.VUE_APP_API_URL + "prods")
+      .get(this.apiRoot + "prods")
       .then(res => {
         const data = res.data;
         const sortedData = data.sort((a, b) =>
@@ -195,7 +195,7 @@ export default {
       border-radius: 3px;
       width: 250px;
       margin: 4rem 2rem;
-      word-break:break-word;
+      word-break: break-word;
 
       .image {
         border-radius: 2px;

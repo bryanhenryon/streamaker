@@ -137,7 +137,7 @@
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -152,7 +152,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "jwt"])
+    ...mapState(["user", "jwt"]),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
+    })
   },
   methods: {
     submit() {
@@ -176,7 +179,7 @@ export default {
 
       axios({
         method: "patch",
-        url: process.env.VUE_APP_API_URL + "users/me",
+        url: this.apiRoot + "users/me",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -184,18 +187,24 @@ export default {
         }
       })
         .then(() => {
-          axios.get(process.env.VUE_APP_API_URL + "users/me", {
-            headers: {
-              "Authorization": this.jwt
-            }
-          })
-          .then(res => {
-            const parsedSessionUser = JSON.parse(localStorage.getItem("user"));
-            parsedSessionUser.profilePicture = res.data.profilePicture;
+          axios
+            .get(this.apiRoot + "users/me", {
+              headers: {
+                Authorization: this.jwt
+              }
+            })
+            .then(res => {
+              const parsedSessionUser = JSON.parse(
+                localStorage.getItem("user")
+              );
+              parsedSessionUser.profilePicture = res.data.profilePicture;
 
-            localStorage.setItem("user", JSON.stringify(parsedSessionUser));
-            this.$store.dispatch("setUser", JSON.parse(localStorage.getItem("user")));
-          }) 
+              localStorage.setItem("user", JSON.stringify(parsedSessionUser));
+              this.$store.dispatch(
+                "setUser",
+                JSON.parse(localStorage.getItem("user"))
+              );
+            });
         })
         .then(() => {
           this.$router.push("/profil/" + this.user.username);
@@ -222,7 +231,7 @@ export default {
   },
   created() {
     axios
-      .get(process.env.VUE_APP_API_URL + "users/me", {
+      .get(this.apiRoot + "users/me", {
         headers: { Authorization: this.jwt }
       })
       .then(res => {

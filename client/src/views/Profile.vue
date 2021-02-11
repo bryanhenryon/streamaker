@@ -5,7 +5,9 @@
       <img
         class="profile__image"
         :src="
-           process.env.VUE_APP_API_URL + 'user/profile_picture/' + user.profilePicture
+         apiRoot +
+            'user/profile_picture/' +
+            user.profilePicture
         "
         alt="Image de profil"
       />
@@ -133,9 +135,7 @@
       <div class="card" v-for="(prod, index) of prods" :key="index">
         <div class="image">
           <img
-            :src="
-                process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
-            "
+            :src="apiRoot + 'prods/images/' + prod.cover"
             draggable="false"
             alt="Couverture de la prod"
           />
@@ -149,15 +149,11 @@
           </button>
           <audio class="audio">
             <source
-              :src="
-                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
-              "
+              :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/mpeg"
             />
             <source
-              :src="
-                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
-              "
+              :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/wav"
             />
           </audio>
@@ -196,7 +192,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Player from "../components/Player";
@@ -219,6 +215,9 @@ export default {
   computed: {
     ...mapState({
       sessionUser: "user"
+    }),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
     }),
     accountCreationDate() {
       const date = new Date(this.user.createdAt);
@@ -259,7 +258,7 @@ export default {
     sortByLatest() {
       axios
         .get(
-            process.env.VUE_APP_API_URL + "prods/" + this.$route.params.username
+          this.apiRoot + "prods/" + this.$route.params.username
         )
         .then(res => {
           const prods = res.data;
@@ -275,7 +274,7 @@ export default {
     sortByOldest() {
       axios
         .get(
-            process.env.VUE_APP_API_URL + "prods/" + this.$route.params.username
+         this.apiRoot + "prods/" + this.$route.params.username
         )
         .then(res => {
           const prods = res.data;
@@ -292,7 +291,7 @@ export default {
       const searchValue = e.target.value.toLowerCase();
       axios
         .get(
-            process.env.VUE_APP_API_URL + "prods/" + this.$route.params.username
+          this.apiRoot + "prods/" + this.$route.params.username
         )
         .then(res => {
           const prods = res.data;
@@ -350,16 +349,12 @@ export default {
   },
   created() {
     axios
-      .get(
-         process.env.VUE_APP_API_URL + "users/" + this.$route.params.username
-      )
+      .get(this.apiRoot + "users/" + this.$route.params.username)
       .then(res => (this.user = res.data))
       .catch(err => console.log(err));
 
     axios
-      .get(
-         process.env.VUE_APP_API_URL + "prods/" + this.$route.params.username
-      )
+      .get(this.apiRoot+ "prods/" + this.$route.params.username)
       .then(res => {
         const prods = res.data;
         prods.length === 0 ? (this.noProd = true) : (this.noProd = false);
@@ -670,7 +665,7 @@ export default {
       border-radius: 3px;
       width: 250px;
       margin: 4rem 3rem;
-      word-break:break-word;
+      word-break: break-word;
 
       .image {
         border-radius: 2px;
