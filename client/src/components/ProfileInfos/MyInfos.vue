@@ -176,7 +176,7 @@ export default {
 
       axios({
         method: "patch",
-        url: "/api/users/me",
+        url: process.env.VUE_APP_API_URL + "users/me",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -184,7 +184,7 @@ export default {
         }
       })
         .then(() => {
-          axios.get("/api/users/me", {
+          axios.get(process.env.VUE_APP_API_URL + "users/me", {
             headers: {
               "Authorization": this.jwt
             }
@@ -222,7 +222,7 @@ export default {
   },
   created() {
     axios
-      .get("/api/users/me", {
+      .get(process.env.VUE_APP_API_URL + "users/me", {
         headers: { Authorization: this.jwt }
       })
       .then(res => {

@@ -179,7 +179,7 @@ export default {
       axios({
         method: "patch",
         url:
-          "/api/prods/" + this.$route.params.id,
+          process.env.VUE_APP_API_URL + "prods/" + this.$route.params.id,
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -223,7 +223,7 @@ export default {
   created() {
     axios
       .get(
-          "/api/prod/" + this.$route.params.id
+        process.env.VUE_APP_API_URL + "prod/" + this.$route.params.id
       )
       .then(res => {
         if (res.data.artist === this.user.username) {

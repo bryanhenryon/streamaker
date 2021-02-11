@@ -24,7 +24,7 @@
           <div class="navbar__user-img-container">
             <img
               class="navbar__user-img"
-              :src="'/api/user/profile_picture/' + user.profilePicture"
+              :src="process.env.VUE_APP_API_URL + 'user/profile_picture/' + user.profilePicture"
               alt="Image de profil"
             />
           </div>

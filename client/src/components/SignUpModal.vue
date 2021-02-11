@@ -155,7 +155,7 @@ export default {
         this.validateConfirmPassword()
       ) {
         axios
-          .post("/api/users", {
+          .post(process.env.VUE_APP_API_URL + "users", {
             username: this.username,
             email: this.email,
             password: this.password,

@@ -178,7 +178,7 @@ export default {
 
       axios({
         method: "post",
-        url: "/api/prods",
+        url: process.env.VUE_APP_API_URL + "prods",
         data: bodyFormData,
         headers: {
           "Content-Type": "multipart/form-data",

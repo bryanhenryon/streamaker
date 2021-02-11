@@ -14,7 +14,7 @@
           <img
             class="confirm-modal__prod-img"
             :src="
-                'api/prods/images/' + prodToDelete.cover
+                process.env.VUE_APP_API_URL + 'prods/images/' + prodToDelete.cover
             "
             alt="Couverture du morceau à supprimer"
           />
@@ -108,7 +108,7 @@
             <td data-label="Couverture">
               <img
                 :src="
-                    '/api/prods/images/' + prod.cover
+                   process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
                 "
                 alt="Couverture de la prod"
               />
@@ -182,7 +182,7 @@ export default {
   methods: {
     fetchUserProds() {
       axios
-        .get("/api/prods")
+        .get(process.env.VUE_APP_API_URL + "prods")
         .then(res => {
           const prods = res.data;
           const filteredProds = prods.filter(
@@ -199,7 +199,7 @@ export default {
     deleteProd(prodToDelete) {
       axios
         .delete(
-            "/api/prods/" + prodToDelete._id,
+            process.env.VUE_APP_API_URL + "prods/" + prodToDelete._id,
           {
             headers: { Authorization: this.jwt }
           }
@@ -221,7 +221,7 @@ export default {
       const searchValue = e.target.value.toLowerCase();
       axios
         .get(
-           "/api/prods/" + this.user.username
+          process.env.VUE_APP_API_URL + "prods/" + this.user.username
         )
         .then(res => {
           const prods = res.data;
@@ -269,7 +269,7 @@ export default {
     sortByLatest() {
       axios
         .get(
-            "/api/prods/" + this.user.username
+            process.env.VUE_APP_API_URL + "prods/" + this.user.username
         )
         .then(res => {
           const prods = res.data;
@@ -285,7 +285,7 @@ export default {
     sortByOldest() {
       axios
         .get(
-            "/api/prods/" + this.user.username
+            process.env.VUE_APP_API_URL + "prods/" + this.user.username
         )
         .then(res => {
           const prods = res.data;

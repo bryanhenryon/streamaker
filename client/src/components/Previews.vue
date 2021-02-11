@@ -9,7 +9,7 @@
         <div class="image">
           <img
             :src="
-                '/api/prods/images/' + prod.cover
+                process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
             "
             draggable="false"
             alt=""
@@ -25,13 +25,13 @@
           <audio class="audio">
             <source
               :src="
-                  '/api/prods/song/' + prod.song
+                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
               "
               type="audio/mpeg"
             />
             <source
               :src="
-                  '/api/prods/song/' + prod.song
+                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
               "
               type="audio/wav"
             />
@@ -120,7 +120,7 @@ export default {
   },
   created() {
     axios
-      .get("/api/prods")
+      .get(process.env.VUE_APP_API_URL + "prods")
       .then(res => {
         const data = res.data;
         const sortedData = data.sort((a, b) =>

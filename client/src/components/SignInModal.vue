@@ -83,7 +83,7 @@ export default {
   methods: {
     signIn() {
       axios
-        .post("/api/users/login", {
+        .post(process.env.VUE_APP_API_URL + "users/login", {
           username: this.username,
           password: this.password
         })

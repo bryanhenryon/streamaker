@@ -117,7 +117,7 @@
         <div class="image">
           <img
             :src="
-                '/api/prods/images/' + prod.cover
+                process.env.VUE_APP_API_URL + 'prods/images/' + prod.cover
             "
             draggable="false"
             alt="Couverture du morceau"
@@ -133,13 +133,13 @@
           <audio class="audio">
             <source
               :src="
-                  '/api/prods/song/' + prod.song
+                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
               "
               type="audio/mpeg"
             />
             <source
               :src="
-                  '/api/prods/song/' + prod.song
+                  process.env.VUE_APP_API_URL + 'prods/song/' + prod.song
               "
               type="audio/wav"
             />
@@ -222,7 +222,7 @@ export default {
     searchProd(e) {
       const searchValue = e.target.value.toLowerCase();
       axios
-        .get("/api/prods")
+        .get(process.env.VUE_APP_API_URL + "prods")
         .then(res => {
           const prods = res.data;
 
@@ -263,7 +263,7 @@ export default {
         if (radio.checked) {
           if (radio.value !== "all") {
             axios
-              .get("/api/prods", {
+              .get(process.env.VUE_APP_API_URL + "prods", {
                 params: {
                   search: this.searchParams
                 }
@@ -288,7 +288,7 @@ export default {
               });
           } else {
             axios
-              .get("/api/prods")
+              .get(process.env.VUE_APP_API_URL + "prods")
               .then(res => {
                 const prods = res.data;
                 prods.length === 0
@@ -309,7 +309,7 @@ export default {
     },
     sortByLatest() {
       axios
-        .get("/api/prods")
+        .get(process.env.VUE_APP_API_URL + "prods")
         .then(res => {
           const prods = res.data;
           prods.length === 0
@@ -326,7 +326,7 @@ export default {
     },
     sortByOldest() {
       axios
-        .get("/api/prods")
+        .get(process.env.VUE_APP_API_URL + "prods")
         .then(res => {
           const prods = res.data;
           prods.length === 0
@@ -378,7 +378,7 @@ export default {
   },
   created() {
     axios
-      .get("/api/prods", {
+      .get(process.env.VUE_APP_API_URL + "prods", {
         params: {
           search: this.$route.query.search
         }
