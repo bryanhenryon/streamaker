@@ -88,11 +88,11 @@ router.get("/api/prods/song/:filename", (req, res) => {
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if(file.fieldname === "cover") {
-            return cb(null, "uploads/prods/covers/");
+            return cb(null, path.resolve("uploads/prods/covers/"));
         } 
 
         if(file.fieldname === "song") {
-            return cb(null, "uploads/prods/songs/");
+            return cb(null, path.resolve("uploads/prods/songs/"));
         }
     },
     filename: function (req, file, cb) {
