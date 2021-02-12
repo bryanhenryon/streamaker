@@ -4,7 +4,7 @@
       <div class="track-infos">
         <div class="track-infos__image">
           <img
-            src="/img/placeholder.jpg"
+            src="../assets/img/placeholder.jpg"
             alt="Couverture du morceau"
             draggable="false"
           />
