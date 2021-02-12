@@ -4,11 +4,7 @@
     <div class="container">
       <img
         class="profile__image"
-        :src="
-         apiRoot +
-            'user/profile_picture/' +
-            user.profilePicture
-        "
+        :src="apiRoot + 'user/profile_picture/' + user.profilePicture"
         alt="Image de profil"
       />
       <div class="profile__username">{{ user.username }}</div>
@@ -257,9 +253,7 @@ export default {
     },
     sortByLatest() {
       axios
-        .get(
-          this.apiRoot + "prods/" + this.$route.params.username
-        )
+        .get(this.apiRoot + "prods/" + this.$route.params.username)
         .then(res => {
           const prods = res.data;
           const sortedProds = prods.sort((a, b) =>
@@ -273,9 +267,7 @@ export default {
     },
     sortByOldest() {
       axios
-        .get(
-         this.apiRoot + "prods/" + this.$route.params.username
-        )
+        .get(this.apiRoot + "prods/" + this.$route.params.username)
         .then(res => {
           const prods = res.data;
           const sortedProds = prods.sort((a, b) =>
@@ -290,9 +282,7 @@ export default {
     searchProd(e) {
       const searchValue = e.target.value.toLowerCase();
       axios
-        .get(
-          this.apiRoot + "prods/" + this.$route.params.username
-        )
+        .get(this.apiRoot + "prods/" + this.$route.params.username)
         .then(res => {
           const prods = res.data;
 
@@ -354,7 +344,7 @@ export default {
       .catch(err => console.log(err));
 
     axios
-      .get(this.apiRoot+ "prods/" + this.$route.params.username)
+      .get(this.apiRoot + "prods/" + this.$route.params.username)
       .then(res => {
         const prods = res.data;
         prods.length === 0 ? (this.noProd = true) : (this.noProd = false);

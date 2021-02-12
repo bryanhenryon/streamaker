@@ -1,6 +1,7 @@
 <template>
   <div class="update-prod">
     <app-navbar></app-navbar>
+    <app-roller-spinner v-if="isLoading"></app-roller-spinner>
     <div class="container">
       <h1>Modifier une prod</h1>
       <form class="form" @submit.prevent="submit">
@@ -125,6 +126,7 @@ import axios from "axios";
 import { mapState, mapGetters } from "vuex";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import RollerSpinner from "../components/spinners/RollerSpinner";
 export default {
   data() {
     return {
@@ -139,7 +141,8 @@ export default {
         coverFileError: "",
         audioFileError: "",
         priceError: ""
-      }
+      },
+      isLoading: false
     };
   },
   computed: {
@@ -150,10 +153,12 @@ export default {
   },
   components: {
     "app-navbar": Navbar,
-    "app-footer": Footer
+    "app-footer": Footer,
+    "app-roller-spinner": RollerSpinner
   },
   methods: {
     submit() {
+      this.isLoading = true;
       const bodyFormData = new FormData();
       bodyFormData.append("title", this.prod.title);
       bodyFormData.append("song", this.prod.song);
@@ -189,9 +194,11 @@ export default {
         }
       })
         .then(() => {
+          this.isLoading = false;
           this.$router.push("/compte/prods");
         })
         .catch(error => {
+          this.isLoading = false;
           console.log(error);
         });
     },

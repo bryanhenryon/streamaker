@@ -1,6 +1,7 @@
 <template>
   <div class="add-prod">
     <app-navbar></app-navbar>
+    <app-roller-spinner v-if="isLoading"></app-roller-spinner>
     <div class="container">
       <h1>Ajouter une prod</h1>
       <form class="form" @submit.prevent="submit">
@@ -122,6 +123,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import RollerSpinner from "../components/spinners/RollerSpinner";
 import Footer from "../components/Footer";
 import { mapState, mapGetters } from "vuex";
 import axios from "axios";
@@ -139,7 +141,8 @@ export default {
         coverFileError: "",
         audioFileError: "",
         priceError: ""
-      }
+      },
+      isLoading: false
     };
   },
   computed: {
@@ -150,10 +153,12 @@ export default {
   },
   components: {
     "app-navbar": Navbar,
-    "app-footer": Footer
+    "app-footer": Footer,
+    "app-roller-spinner": RollerSpinner
   },
   methods: {
     submit() {
+      this.isLoading = true;
       const bodyFormData = new FormData();
       bodyFormData.append("title", this.prod.title);
       bodyFormData.append("song", this.prod.song);
@@ -189,9 +194,11 @@ export default {
         }
       })
         .then(() => {
+          this.isLoading = false;
           this.$router.push("/compte/prods");
         })
         .catch(error => {
+          this.isLoading = false;
           this.prod.audioFileError = error.response.data.errors.song;
           this.prod.titleError = error.response.data.errors.title;
           this.prod.priceError = error.response.data.errors.price;

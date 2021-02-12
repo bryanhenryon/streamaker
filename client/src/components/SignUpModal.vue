@@ -100,8 +100,13 @@
             </div>
           </div>
 
-          <button type="submit" class="btn sign-up-modal__sign-up-btn">
-            S'enregistrer
+          <button
+            :disabled="isLoading"
+            type="submit"
+            class="btn sign-up-modal__sign-up-btn"
+          >
+            <span v-if="!isLoading">S'enregistrer</span>
+            <app-facebook-spinner v-else></app-facebook-spinner>
           </button>
         </form>
         <div class="sign-up-modal__already-registered">
@@ -119,12 +124,21 @@
 </template>
 
 <script>
+import FacebookSpinner from "./spinners/FacebookSpinner";
 import "animate.css";
 import axios from "axios";
 import { mapFields } from "vuex-map-fields";
 import { mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      isLoading: false
+    };
+  },
+  components: {
+    "app-facebook-spinner": FacebookSpinner
+  },
   computed: {
     ...mapFields("signUpModal", [
       "username",
@@ -158,6 +172,7 @@ export default {
         this.validatePassword() &&
         this.validateConfirmPassword()
       ) {
+        this.isLoading = true;
         axios
           .post(this.apiRoot + "users", {
             username: this.username,
@@ -166,6 +181,7 @@ export default {
             confirmPassword: this.confirmPassword
           })
           .then(res => {
+            this.isLoading = false;
             localStorage.setItem("jwt", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
 
@@ -179,6 +195,7 @@ export default {
             signUpModal.classList.remove("active");
           })
           .catch(error => {
+            this.isLoading = false;
             this.$store.commit(
               "signUpModal/setEmailErrorMessage",
               error.response.data.errors.email

@@ -46,8 +46,13 @@
               v-model="password"
             />
           </div>
-          <button class="btn sign-in-modal__sign-in-btn" @click="signIn">
-            Se connecter
+          <button
+            :disabled="isLoading"
+            class="btn sign-in-modal__sign-in-btn"
+            @click="signIn"
+          >
+            <span v-if="!isLoading">Se connecter</span>
+            <app-facebook-spinner v-else></app-facebook-spinner>
           </button>
         </form>
         <div class="sign-in-modal__not-registered">
@@ -69,25 +74,39 @@
 </template>
 
 <script>
+import FacebookSpinner from "./spinners/FacebookSpinner";
 import { mapFields } from "vuex-map-fields";
 import { mapGetters } from "vuex";
 import axios from "axios";
 import "animate.css";
 export default {
+  data() {
+    return {
+      isLoading: false
+    };
+  },
+  components: {
+    "app-facebook-spinner": FacebookSpinner
+  },
   computed: {
     ...mapGetters("signInModal", {
       errorMessage: "getErrorMessage"
+    }),
+    ...mapGetters("global", {
+      apiRoot: "getApiRoot"
     }),
     ...mapFields("signInModal", ["username", "password"])
   },
   methods: {
     signIn() {
+      this.isLoading = true;
       axios
         .post(this.apiRoot + "users/login", {
           username: this.username,
           password: this.password
         })
         .then(res => {
+          this.isLoading = false;
           this.$store.dispatch("signInModal/resetForm");
 
           localStorage.setItem("jwt", res.data.token);
@@ -103,6 +122,7 @@ export default {
           signInModal.classList.remove("active");
         })
         .catch(error => {
+          this.isLoading = false;
           this.$store.dispatch(
             "signInModal/setErrorMessage",
             error.response.data.error

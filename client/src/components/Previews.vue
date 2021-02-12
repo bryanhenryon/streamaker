@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     ...mapGetters("global", {
-        apiRoot: "getApiRoot"
+      apiRoot: "getApiRoot"
     })
   },
   components: {

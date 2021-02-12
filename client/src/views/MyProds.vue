@@ -1,6 +1,7 @@
 <template>
   <div class="my-prods">
     <app-navbar></app-navbar>
+    <app-roller-spinner v-if="isLoading"></app-roller-spinner>
     <div
       v-if="prodToDelete"
       class="confirm-modal animate__animated animate__fadeIn animate__faster"
@@ -13,9 +14,7 @@
         <div class="d-flex align-items-center justify-content-center">
           <img
             class="confirm-modal__prod-img"
-            :src="
-              apiRoot + 'prods/images/' + prodToDelete.cover
-            "
+            :src="apiRoot + 'prods/images/' + prodToDelete.cover"
             alt="Couverture du morceau à supprimer"
           />
           <div class="confirm-modal__prod-title">{{ prodToDelete.title }}</div>
@@ -107,9 +106,7 @@
           <tr>
             <td data-label="Couverture">
               <img
-                :src="
-                  apiRoot + 'prods/images/' + prod.cover
-                "
+                :src="apiRoot + 'prods/images/' + prod.cover"
                 alt="Couverture de la prod"
               />
             </td>
@@ -163,15 +160,18 @@ import axios from "axios";
 import { mapState, mapGetters } from "vuex";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import RollerSpinner from "../components/spinners/RollerSpinner";
 export default {
   data() {
     return {
       prods: null,
       noResult: null,
       noProd: null,
-      prodToDelete: null
+      prodToDelete: null,
+      isLoading: false
     };
   },
+
   computed: {
     ...mapState(["user", "jwt"]),
     ...mapGetters("global", {
@@ -180,7 +180,8 @@ export default {
   },
   components: {
     "app-navbar": Navbar,
-    "app-footer": Footer
+    "app-footer": Footer,
+    "app-roller-spinner": RollerSpinner
   },
   methods: {
     fetchUserProds() {
@@ -200,11 +201,13 @@ export default {
     },
 
     deleteProd(prodToDelete) {
+      this.isLoading = true;
       axios
         .delete(this.apiRoot + "prods/" + prodToDelete._id, {
           headers: { Authorization: this.jwt }
         })
         .then(() => {
+          this.isLoading = false;
           this.hideConfirmModal();
           this.fetchUserProds();
         });
