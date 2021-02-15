@@ -63,18 +63,32 @@
             {{ prod.audioFileError }}
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" data-name="tags-input">
           <label for="tags"
             >Tags <span class="indicator">(optionnel)</span></label
           >
-          <input
-            type="text"
-            name="tags"
-            id="tags"
-            autocomplete="off"
-            spellcheck="false"
-            v-model="prod.tags"
-          />
+          <div class="tags-container">
+            <span v-for="(tag, index) of prod.tags" :key="index" class="tag">
+              {{ tag }}
+              <button
+                @click="removeTag(index)"
+                type="button"
+                class="btn remove-tag"
+              >
+                <svg class="icon icon-cross">
+                  <use xlink:href="sprite.svg#icon-cross"></use>
+                </svg>
+              </button>
+            </span>
+            <input
+              type="text"
+              id="tags"
+              name="tags"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Ex: Hip-Hop, Electro, Lo-fi..."
+            />
+          </div>
         </div>
         <div class="form-group">
           <label for="price">Prix</label>
@@ -168,7 +182,11 @@ export default {
 
         bodyFormData.append("songToDisplay", audioFileName);
       }
-      bodyFormData.append("tags", this.prod.tags);
+
+      for (let tag of this.prod.tags) {
+        bodyFormData.append("tags", tag);
+      }
+
       bodyFormData.append("artist", this.user.username);
 
       bodyFormData.append("price", Number(this.prod.price).toFixed(2));
@@ -230,6 +248,44 @@ export default {
       const file = realFileBtn.files[0];
       this.prod.cover = file;
     }
+  },
+  mounted() {
+    const tagsContainer = document.querySelector(".tags-container");
+    const mainInput = document.getElementById("tags");
+
+    mainInput.addEventListener("input", () => {
+      let enteredTags = mainInput.value.trim().split(",");
+      if (enteredTags.length > 1) {
+        enteredTags.forEach(t => {
+          if (t.length !== 0) {
+            addTag(t);
+          }
+        });
+
+        mainInput.value = "";
+      }
+    });
+
+    mainInput.addEventListener("keydown", e => {
+      let keyCode = e.which || e.keyCode;
+      if (
+        keyCode === 8 &&
+        mainInput.value.length === 0 &&
+        this.prod.tags.length > 0
+      ) {
+        removeTag(this.prod.tags.length - 1);
+      }
+    });
+
+    tagsContainer.appendChild(mainInput);
+
+    const addTag = text => {
+      this.prod.tags.push(text);
+    };
+
+    const removeTag = index => {
+      this.prod.tags.splice(index, 1);
+    };
   }
 };
 </script>
@@ -325,6 +381,39 @@ export default {
   .audio-file-custom-txt,
   .cover-file-custom-txt {
     font-size: 1.4rem;
+  }
+}
+
+.tags-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid $color-white;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+
+  .tag {
+    font-size: 1.3rem;
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    background: $color-white;
+    color: $color-black;
+    font-weight: 500;
+
+    .icon-cross {
+      height: 1.3rem;
+      width: 1.3rem;
+      transform: translateY(2px) translateX(2px);
+    }
+  }
+
+  #tags {
+    border-bottom: none;
+    padding: 0;
+    width: auto;
   }
 }
 

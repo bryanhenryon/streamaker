@@ -116,9 +116,12 @@
             </td>
 
             <td v-if="prod.tags.length !== 0" data-label="Tags">
-              <span v-for="(tag, index) of prod.tags" :key="index">{{
-                tag
-              }}</span>
+              <span
+                class="tag"
+                v-for="(tag, index) of prod.tags"
+                :key="index"
+                >{{ tag }}</span
+              >
             </td>
             <td v-else data-label="Tags">Aucun</td>
 
@@ -639,6 +642,11 @@ export default {
   td {
     border-top: 1px solid $color-white;
     padding: 1rem 2rem 0 0rem;
+    max-width: 200px;
+
+    @media (max-width: 1024px) {
+      max-width: 100%;
+    }
 
     .format {
       font-size: 1.2rem;
@@ -647,6 +655,16 @@ export default {
       padding: 0.5rem 1rem;
       font-weight: bold;
       border-radius: 0.5rem;
+    }
+
+    .tag {
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      background: #262626;
+      border-radius: 0.5rem;
+      display: inline-block;
+      margin: 0.5rem;
+      color: $color-white;
     }
 
     .btn--delete,
