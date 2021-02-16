@@ -14,7 +14,7 @@
             name=""
             spellcheck="false"
             class="searchbar-input"
-            placeholder="Rechercher un morceau ou un artiste"
+            placeholder="Rechercher"
             @keyup="searchProd"
           />
         </div>
@@ -227,7 +227,11 @@ export default {
           const filteredProds = prods.filter(
             data =>
               data.title.toLowerCase().includes(searchValue) ||
-              data.artist.toLowerCase().includes(searchValue)
+              data.artist.toLowerCase().includes(searchValue) ||
+              data.tags
+                .toString()
+                .toLowerCase()
+                .includes(searchValue)
           );
 
           if (filteredProds.length === 0) {
@@ -389,20 +393,6 @@ export default {
       .catch(error => {
         console.log(error);
       });
-  },
-  mounted() {
-    const searchbarInput = document.querySelector(".searchbar-input");
-    window.addEventListener("resize", () => {
-      if (window.innerWidth < 520) {
-        searchbarInput.placeholder = "Rechercher";
-      } else {
-        searchbarInput.placeholder = "Rechercher un morceau ou un artiste";
-      }
-    });
-
-    if (window.innerWidth < 520) {
-      searchbarInput.placeholder = "Rechercher";
-    }
   }
 };
 </script>

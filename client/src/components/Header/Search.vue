@@ -15,7 +15,7 @@
           name=""
           spellcheck="false"
           class="searchbar-input"
-          placeholder="Rechercher un morceau ou un artiste"
+          placeholder="Que recherchez-vous ?"
           v-model="searchValue"
         />
       </form>
@@ -91,7 +91,7 @@ export default {
 
     .searchbar {
       background: #fff;
-      border-radius: 0.5rem;
+      border-radius: 0.3rem;
       padding: 1rem;
       display: flex;
       align-items: center;
@@ -109,16 +109,13 @@ export default {
         border: none;
         outline: none;
         border-radius: 0.5rem;
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin: 0 0.5rem;
         width: 100%;
-        letter-spacing: 0.5px;
 
         &::placeholder {
-          color: #a9a9a9;
+          color: rgba($color-black, 0.6);
           font-family: "Roboto", sans-serif;
-          font-weight: 300;
-          font-size: 1.8rem;
 
           @media (max-width: 480px) {
             font-size: 1.4rem;
@@ -137,6 +134,7 @@ export default {
         .icon-search {
           height: 1.6rem;
           width: 1.6rem;
+          fill: rgba($color-black, 0.7);
         }
       }
     }

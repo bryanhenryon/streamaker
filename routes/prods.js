@@ -14,9 +14,10 @@ router.get("/api/prods", async (req, res) => {
         const prods = await Prods.find({
             $or:[
                 { title: { $regex : new RegExp(query.search, "i") }  },
-                { artist: { $regex : new RegExp(query.search, "i") } }
+                { artist: { $regex : new RegExp(query.search, "i") } },
+                { tags: { $regex : new RegExp(query.search, "i") } } 
             ] 
-        });
+        }).sort({_id: -1})
 
         const stringified = JSON.stringify(prods, null, 2);
         res.type('json').send(stringified);
@@ -39,7 +40,7 @@ router.get("/api/prods/:username", async (req, res) => {
     try {
         const prods = await Prods.find({
             artist: { $regex : new RegExp(req.params.username, "i") } 
-        });
+        }).sort({_id: -1});
 
         const stringified = JSON.stringify(prods, null, 2);
         res.type('json').send(stringified);

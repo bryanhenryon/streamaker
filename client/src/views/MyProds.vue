@@ -57,7 +57,7 @@
               name=""
               spellcheck="false"
               class="searchbar-input"
-              placeholder="Rechercher un morceau"
+              placeholder="Rechercher"
               @keyup="searchProd"
             />
           </div>
@@ -230,9 +230,15 @@ export default {
         .then(res => {
           const prods = res.data;
 
-          const filteredProds = prods.filter(data =>
-            data.title.toLowerCase().includes(searchValue)
-          );
+          const filteredProds = prods.filter(data => {
+            return (
+              data.title.toLowerCase().includes(searchValue) ||
+              data.tags
+                .toString()
+                .toLowerCase()
+                .includes(searchValue)
+            );
+          });
 
           filteredProds.length === 0
             ? (this.noResult = true)
