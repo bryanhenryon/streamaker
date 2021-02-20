@@ -74,6 +74,15 @@ const usersSchema = new mongoose.Schema({
 
 usersSchema.plugin(uniqueValidator);
 
+usersSchema.methods.toJSON = function () {
+  const userObject = this.toObject();
+
+  delete userObject.password;
+
+  return userObject
+}
+
+
 usersSchema.statics.findByCredentials = async (username, password) => {
   const user = await Users.findOne({ 
     username: username
@@ -99,7 +108,6 @@ usersSchema.pre('save', async function(next) {
 
   next();
 });
-
 
 const Users = mongoose.model("Users", usersSchema);
 

@@ -57,16 +57,18 @@ const routes = [
   // }
 ];
 
-routes.scrollBehavior = () => {
-  return { x: 0, y: 0 };
-};
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
 
+routes.scrollBehavior = () => {
+  return { x: 0, y: 0 };
+};
+
 router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+
   if (to.meta.requiresAuth && !store.state.user) {
     next("/");
 

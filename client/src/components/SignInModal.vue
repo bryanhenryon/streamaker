@@ -214,8 +214,6 @@ export default {
     border-radius: 5px;
 
     @media (max-width: 480px) {
-      margin: 0;
-      width: 100%;
       max-width: 100%;
     }
   }
