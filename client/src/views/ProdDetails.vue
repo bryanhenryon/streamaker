@@ -56,8 +56,7 @@ export default {
       prod: null,
       loaded: false,
       product: {
-        price: null,
-        description: "description!!!"
+        price: null
       }
     };
   },
@@ -93,11 +92,46 @@ export default {
               ]
             });
           },
-          onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-              alert(
-                "Transaction completed by " + details.payer.name.given_name
-              );
+          onApprove: (data, actions) => {
+            const timestamp = new Date().getUTCMilliseconds();
+            const id = timestamp;
+            return actions.order.capture().then(details => {
+              axios
+                .post(
+                  "https://api-m.sandbox.paypal.com/v1/payments/payouts",
+                  {
+                    sender_batch_header: {
+                      sender_batch_id: id,
+                      email_subject: "You have a payout!",
+                      email_message:
+                        "You have received a payout! Thanks for using our service!",
+                      recipient_type: "EMAIL"
+                    },
+                    items: [
+                      {
+                        amount: {
+                          value: this.product.price,
+                          currency: "EUR"
+                        },
+                        note: "Félicitations, quelqu'un a acheté votre prod !",
+                        sender_item_id: id,
+                        receiver: "bryan@issou.com"
+                      }
+                    ]
+                  },
+                  {
+                    headers: {
+                      Authorization:
+                        "Bearer A21AAJooJspkot_5iTUyAfMfKfwu-d-58nHwVe1vgC9EooZGG2EQbk3lSfVqiQiwBm58bqy2_WQYh_BmPl06GrLBq0uHxsDCQ"
+                    }
+                  }
+                )
+                .then(() => {
+                  alert(
+                    "Transaction completed by " + details.payer.name.given_name
+                  );
+                })
+                .catch(err => console.log(err));
             });
           }
         })
