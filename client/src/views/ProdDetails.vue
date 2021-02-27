@@ -31,12 +31,13 @@
             </li>
             <li v-else class="infos__tags">Tags : Aucun</li>
             <li v-if="prod.maxStreams" class="infos__max-streams">
-              Max streams : {{ prod.maxStreams.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+              Max streams :
+              {{ prod.maxStreams.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
             </li>
             <li v-else class="infos__max-streams">Max streams : illimité</li>
             <li class="infos__price">Prix : {{ prod.price }}€</li>
           </ul>
-          <div ref="paypal" class="paypal"></div>
+          <div class="paypal"></div>
         </div>
       </div>
     </div>
@@ -100,24 +101,24 @@ export default {
             });
           }
         })
-        .render(".paypal")
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+        .render(".paypal");
     }
   },
-  async mounted() {
-    const script = document.createElement("script");
-    script.src =
-      "https://www.paypal.com/sdk/js?client-id=ARrBwGf7HfFOGXrvKTj6-oncPpq_l9ZRkBz4iGfi3KKH2FjvmZaheUK-hesVULH2uTMe2g-9CdEQqbDJ&disable-funding=credit,card";
-    script.addEventListener("load", this.setLoaded);
-    document.body.appendChild(script);
-  },
+
   created() {
     axios
       .get(this.apiRoot + "prod/" + this.$route.params.id)
       .then(res => {
         this.prod = res.data;
         this.product.price = res.data.price;
+
+        const script = document.createElement("script");
+        script.setAttribute(
+          "src",
+          "https://www.paypal.com/sdk/js?client-id=ARrBwGf7HfFOGXrvKTj6-oncPpq_l9ZRkBz4iGfi3KKH2FjvmZaheUK-hesVULH2uTMe2g-9CdEQqbDJ&disable-funding=credit,card&currency=EUR"
+        );
+        script.addEventListener("load", this.setLoaded);
+        document.head.appendChild(script);
       })
       .catch(err => {
         console.log(err);
