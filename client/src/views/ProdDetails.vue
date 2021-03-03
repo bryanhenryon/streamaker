@@ -1,6 +1,7 @@
 <template>
   <div class="prod-details">
     <app-navbar></app-navbar>
+    <app-roller-spinner v-if="isLoading"></app-roller-spinner>
     <div class="container">
       <div class="cover-infos-wrapper" v-if="prod">
         <div class="image-wrapper">
@@ -48,6 +49,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import RollerSpinner from "../components/spinners/RollerSpinner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 export default {
@@ -58,12 +60,14 @@ export default {
       product: {
         price: null,
         email: null
-      }
+      },
+      isLoading: false
     };
   },
   components: {
     "app-navbar": Navbar,
-    "app-footer": Footer
+    "app-footer": Footer,
+    "app-roller-spinner": RollerSpinner
   },
   computed: {
     ...mapGetters("global", {
@@ -93,10 +97,17 @@ export default {
               .catch(err => console.log(err));
           },
           onApprove: data => {
+            this.isLoading = true;
             return axios
               .post(this.apiRoot + "paypal/capture-order/" + data.orderID)
               .then(() => {
-                alert("Transaction réussie!");
+                this.$store.dispatch("setPurchasedSong", {
+                  songName: this.prod.song,
+                  originalSongName: this.prod.songToDisplay
+                });
+                this.$store.dispatch("setSuccessfulTransaction", true);
+                this.isLoading = false;
+                this.$router.push("/confirmation-transaction");
               })
               .catch(err => console.log(err));
           }
@@ -116,7 +127,6 @@ export default {
       })
       .then(prod => {
         axios.get(this.apiRoot + "users/" + prod.artist).then(res => {
-          console.log(res);
           const email = res.data.email;
           this.product.email = email;
 

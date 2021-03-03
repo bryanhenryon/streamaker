@@ -7,7 +7,7 @@ import AddProd from "../views/AddProd";
 import UpdateProd from "../views/UpdateProd";
 import ProfileInfos from "../views/ProfileInfos";
 import ProdDetails from "../views/ProdDetails";
-// import NewPassword from "../components/ProfileInfos/Password";
+import TransactionConfirmation from "../views/TransactionConfirmation";
 import store from "../store";
 
 const routes = [
@@ -30,6 +30,11 @@ const routes = [
     path: "/profil/:username",
     name: "Profile",
     component: Profile
+  },
+  {
+    path: "/confirmation-transaction",
+    name: "TransactionConfirmation",
+    component: TransactionConfirmation
   },
   {
     path: "/compte/prods",
@@ -55,12 +60,6 @@ const routes = [
     component: ProfileInfos,
     meta: { requiresAuth: true }
   }
-  // {
-  //   path: "/compte/nouveau-mot-de-passe",
-  //   name: "NewPassword",
-  //   component: NewPassword,
-  //   meta: { requiresAuth: true }
-  // }
 ];
 
 const router = createRouter({

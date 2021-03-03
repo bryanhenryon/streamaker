@@ -28,13 +28,10 @@ router.post("/api/paypal/create-order", async (req, res) => {
       try {
         order = await client.execute(request);
       } catch (err) {
-    
-        // 4. Handle any errors from the call
         console.error(err);
         return res.send(500);
       }
     
-      // 5. Return a successful response to the client with the order ID
       res.status(200).json({
         orderID: order.result.id
       });     
@@ -42,10 +39,15 @@ router.post("/api/paypal/create-order", async (req, res) => {
 
 router.post("/api/paypal/capture-order/:orderID", (req, res) => {
   let captureOrder =  async function(orderId) {
-    request = new paypal.orders.OrdersCaptureRequest(orderId);
-    request.requestBody({});
-    let response = await client.execute(request);
-    res.send(response);
+    try {
+      request = new paypal.orders.OrdersCaptureRequest(orderId);
+      request.requestBody({});
+      let response = await client.execute(request);
+      res.send(response);
+    } catch (error) {
+      res.send(error);
+      console.log(error);
+    }
 }
 
 captureOrder(req.params.orderID); 
