@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    &copy; {{ copyrightYear }} Propriétaire(s) du site &mdash;
+    &copy; {{ copyrightYear }} Setbon Akim &mdash;
     <a href="#" class="legal-notices-link">Mentions légales</a>
   </footer>
 </template>

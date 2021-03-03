@@ -6,7 +6,9 @@
         <h1>
           Merci de votre achat !
         </h1>
-        <div>Le téléchargement de la prod devrait bientôt se lancer</div>
+        <div class="transaction-confirmation__download-info">
+          Le téléchargement de la prod devrait bientôt se lancer
+        </div>
       </div>
 
       <div class="transaction-confirmation__secondary-message">
@@ -15,6 +17,7 @@
           :
         </div>
         <a
+          v-if="purchasedSong"
           class="transaction-confirmation__download-song"
           :href="apiRoot + 'prods/song/' + purchasedSong.songName"
           :download="purchasedSong.originalSongName"
@@ -26,7 +29,14 @@
         </a>
       </div>
 
-      <div>À bientôt !</div>
+      <div class="transaction-confirmation__get-help">
+        Pour toute question concernant votre achat, veuillez contacter le
+        propriétaire du site à l'adresse
+        <a href="mailto:akim.beats@gmail.com">akim.beats@gmail.com</a> ou au
+        <a href="tel:+33689315166">06 89 31 51 66</a>
+      </div>
+
+      <div class="transaction-confirmation__see-you-soon">À bientôt !</div>
     </div>
     <app-footer></app-footer>
   </div>
@@ -51,8 +61,19 @@ export default {
     "app-navbar": Navbar,
     "app-footer": Footer
   },
+  created() {
+    if (!this.purchasedSong) {
+      this.$router.push("/");
+      return;
+    }
+  },
   mounted() {
-    document.querySelector(".transaction-confirmation__download-song").click();
+    const downloadSong = document.querySelector(
+      ".transaction-confirmation__download-song"
+    );
+    if (downloadSong) {
+      downloadSong.click();
+    }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -88,11 +109,24 @@ export default {
     margin-bottom: 5rem;
     h1 {
       margin-bottom: 1rem;
+
+      @media (max-width: 480px) {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  &__download-info {
+    @media (max-width: 480px) {
+      font-size: 1.4rem;
     }
   }
 
   &__secondary-message {
     margin-bottom: 2rem;
+    @media (max-width: 480px) {
+      font-size: 1.4rem;
+    }
 
     a {
       display: inline-flex;
@@ -104,18 +138,54 @@ export default {
       text-decoration: none;
       color: $color-black;
       background: $color-white;
+      transition: transform 0.1s ease-in-out;
+
+      @media (max-width: 480px) {
+        font-size: 1.4rem;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(-1px);
+      }
 
       .icon-file_download {
         height: 2.4rem;
         width: 2.4rem;
         margin-left: 0.5rem;
+
+        @media (max-width: 480px) {
+          height: 2.2rem;
+          width: 2.2rem;
+        }
       }
+    }
+  }
+
+  &__get-help {
+    margin-bottom: 2rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.4rem;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  &__see-you-soon {
+    @media (max-width: 480px) {
+      font-size: 1.4rem;
     }
   }
 }
 
 .container {
-  max-width: 900px;
+  max-width: 600px;
   margin: 10rem auto;
   text-align: center;
 

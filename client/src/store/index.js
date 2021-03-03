@@ -9,7 +9,7 @@ export default createStore({
   state: {
     jwt: localStorage.getItem("jwt"),
     user: JSON.parse(localStorage.getItem("user")),
-    successfulTransaction: false,
+    successfulTransaction: true,
     purchasedSong: null
   },
   getters: {
