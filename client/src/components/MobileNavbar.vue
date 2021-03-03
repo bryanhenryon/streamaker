@@ -73,10 +73,9 @@
             </div>
           </div>
         </div>
-      </div>
-      <div>
         <app-social class="mobile"></app-social>
       </div>
+      <div></div>
     </div>
   </div>
 </template>
@@ -115,6 +114,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: auto;
   transition: transform 0.2s ease-in-out;
   transform: translateY(-100vh);
 
@@ -128,12 +128,6 @@ export default {
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100vh;
-
     padding: 3rem;
 
     .icon-cross {
@@ -145,7 +139,7 @@ export default {
 
   &__main-content {
     overflow: auto;
-    margin: 2rem 0;
+    margin: 5rem auto;
     width: 100%;
     max-width: 300px;
 
@@ -165,6 +159,10 @@ export default {
 
       .navbar_link {
         margin-bottom: 5rem;
+
+        @media (max-width: 480px) {
+          margin-bottom: 4rem;
+        }
       }
 
       .navbar_link--home,
@@ -263,6 +261,10 @@ export default {
             color: inherit;
             text-decoration: none;
 
+            @media (max-width: 480px) {
+              margin-bottom: 4rem;
+            }
+
             .icon-switch,
             .icon-user,
             .icon-music-notes,
@@ -275,6 +277,10 @@ export default {
 
             &:hover {
               font-weight: 500;
+            }
+
+            &:last-child {
+              margin-bottom: 0rem;
             }
           }
         }

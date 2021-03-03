@@ -37,6 +37,7 @@
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    margin-top: 8rem;
 
     @media (max-width: 680px) {
       display: flex;
