@@ -9,6 +9,7 @@ import ProfileInfos from "../views/ProfileInfos";
 import ProdDetails from "../views/ProdDetails";
 import TransactionConfirmation from "../views/TransactionConfirmation";
 import LegalNotices from "../views/LegalNotices";
+import NotFound from "../views/NotFound";
 import store from "../store";
 
 const routes = [
@@ -65,6 +66,11 @@ const routes = [
     path: "/mentions-legales",
     name: "LegalNotices",
     component: LegalNotices
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound
   }
 ];
 
