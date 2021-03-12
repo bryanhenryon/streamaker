@@ -20,7 +20,7 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      title: `${siteName} - Accueil`
+      title: `Accueil | ${siteName}`
     }
   },
   {
@@ -28,7 +28,7 @@ const routes = [
     name: "Prods",
     component: Prods,
     meta: {
-      title: `${siteName} - Prods`
+      title: `Prods | ${siteName}`
     }
   },
   {
@@ -36,7 +36,7 @@ const routes = [
     name: "ProdDetails",
     component: ProdDetails,
     meta: {
-      title: `${siteName} - Détails`
+      title: `Détails | ${siteName}`
     }
   },
   {
@@ -44,7 +44,7 @@ const routes = [
     name: "Profile",
     component: Profile,
     meta: {
-      title: `${siteName} - Profil`
+      title: `Profil | ${siteName}`
     }
   },
   {
@@ -52,7 +52,7 @@ const routes = [
     name: "TransactionConfirmation",
     component: TransactionConfirmation,
     meta: {
-      title: `${siteName} - Confirmation`
+      title: `Merci de votre achat ! | ${siteName}`
     }
   },
   {
@@ -61,14 +61,14 @@ const routes = [
     component: MyProds,
     meta: {
       requiresAuth: true,
-      title: `${siteName} - Mes prods`
+      title: `Mes prods | ${siteName}`
     }
   },
   {
     path: "/compte/prods/ajouter",
     name: "AddProd",
     component: AddProd,
-    meta: { requiresAuth: true, title: `${siteName} - Ajouter une prod` }
+    meta: { requiresAuth: true, title: `Ajouter une prod | ${siteName}` }
   },
   {
     path: "/compte/prods/:id",
@@ -76,7 +76,7 @@ const routes = [
     component: UpdateProd,
     meta: {
       requiresAuth: true,
-      title: `${siteName} - Modifier une prod`
+      title: `Modifier une prod | ${siteName}`
     }
   },
   {
@@ -85,7 +85,7 @@ const routes = [
     component: ProfileInfos,
     meta: {
       requiresAuth: true,
-      title: `${siteName} - Mes informations`
+      title: `Mes informations | ${siteName}`
     }
   },
   {
@@ -93,7 +93,7 @@ const routes = [
     name: "LegalNotices",
     component: LegalNotices,
     meta: {
-      title: `${siteName} - Mentions légales`
+      title: `Mentions légales | ${siteName}`
     }
   },
   {
@@ -101,7 +101,7 @@ const routes = [
     name: "NotFound",
     component: NotFound,
     meta: {
-      title: `${siteName} - 404`
+      title: `Page non trouvée | ${siteName}`
     }
   }
 ];
