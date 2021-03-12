@@ -182,6 +182,9 @@ export default {
     justify-content: space-between;
     align-items: center;
 
+    max-width: 1920px;
+    margin: 0 auto;
+
     @media (max-width: 480px) {
       justify-content: center;
       text-align: center;
@@ -224,8 +227,12 @@ export default {
   }
 
   .cards {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-items: center;
+    gap: 50px;
+    margin: 4rem auto;
+    max-width: 1920px;
 
     @media (max-width: 768px) {
       justify-content: center;
@@ -240,7 +247,6 @@ export default {
     .card {
       border-radius: 3px;
       width: 250px;
-      margin: 4rem 2rem;
       word-break: break-word;
 
       .image {

@@ -467,7 +467,7 @@ export default {
 
 <style lang="scss" scoped>
 .prods-list {
-  max-width: 1600px;
+  max-width: 1920px;
   margin: 10rem auto;
 
   @media (max-width: 768px) {
@@ -657,8 +657,11 @@ export default {
 }
 
 .cards {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: space-evenly;
+  gap: 5rem;
+  margin: 4rem 0;
 
   @media (max-width: 768px) {
     justify-content: center;
@@ -690,7 +693,6 @@ export default {
   .card {
     border-radius: 3px;
     width: 250px;
-    margin: 4rem 2rem;
     word-break: break-word;
 
     .image {

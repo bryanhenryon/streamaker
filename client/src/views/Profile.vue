@@ -1,198 +1,204 @@
 <template>
   <div class="profile" v-if="user">
     <app-navbar></app-navbar>
-    <div class="container">
-      <img
-        class="profile__image"
-        :src="apiRoot + 'user/profile_picture/' + user.profilePicture"
-        alt="Image de profil"
-      />
-      <div class="profile__username">{{ user.username }}</div>
-      <div class="profile__member-since">
-        Membre depuis le {{ accountCreationDate }}
-      </div>
-      <p v-if="user.description" class="profile__description">
-        {{ user.description }}
-      </p>
-      <ul class="profile__social-links">
-        <li v-if="user.soundcloud" class="profile__social-link">
-          <a :href="user.soundcloud" target="_blank" rel="noopener">
-            <svg class="icon icon-soundcloud">
-              <use xlink:href="sprite.svg#icon-soundcloud"></use>
-            </svg>
-          </a>
-        </li>
-        <li v-if="user.instagram" class="profile__social-link">
-          <a :href="user.instagram" target="_blank" rel="noopener">
-            <svg class="icon icon-instagram">
-              <use xlink:href="sprite.svg#icon-instagram"></use>
-            </svg>
-          </a>
-        </li>
-        <li v-if="user.youtube" class="profile__social-link">
-          <a :href="user.youtube" target="_blank" rel="noopener">
-            <svg class="icon icon-youtube">
-              <use xlink:href="sprite.svg#icon-youtube"></use>
-            </svg>
-          </a>
-        </li>
-        <li v-if="user.twitter" class="profile__social-link">
-          <a :href="user.twitter" target="_blank" rel="noopener">
-            <svg class="icon icon-twitter">
-              <use xlink:href="sprite.svg#icon-twitter"></use>
-            </svg>
-          </a>
-        </li>
-        <li v-if="user.facebook" class="profile__social-link">
-          <a :href="user.facebook" target="_blank" rel="noopener">
-            <svg class="icon icon-facebook">
-              <use xlink:href="sprite.svg#icon-facebook"></use>
-            </svg>
-          </a>
-        </li>
-      </ul>
+    <div class="width-wrapper">
+      <div class="container">
+        <img
+          class="profile__image"
+          :src="apiRoot + 'user/profile_picture/' + user.profilePicture"
+          alt="Image de profil"
+        />
+        <div class="profile__username">{{ user.username }}</div>
+        <div class="profile__member-since">
+          Membre depuis le {{ accountCreationDate }}
+        </div>
+        <p v-if="user.description" class="profile__description">
+          {{ user.description }}
+        </p>
+        <ul class="profile__social-links">
+          <li v-if="user.soundcloud" class="profile__social-link">
+            <a :href="user.soundcloud" target="_blank" rel="noopener">
+              <svg class="icon icon-soundcloud">
+                <use xlink:href="sprite.svg#icon-soundcloud"></use>
+              </svg>
+            </a>
+          </li>
+          <li v-if="user.instagram" class="profile__social-link">
+            <a :href="user.instagram" target="_blank" rel="noopener">
+              <svg class="icon icon-instagram">
+                <use xlink:href="sprite.svg#icon-instagram"></use>
+              </svg>
+            </a>
+          </li>
+          <li v-if="user.youtube" class="profile__social-link">
+            <a :href="user.youtube" target="_blank" rel="noopener">
+              <svg class="icon icon-youtube">
+                <use xlink:href="sprite.svg#icon-youtube"></use>
+              </svg>
+            </a>
+          </li>
+          <li v-if="user.twitter" class="profile__social-link">
+            <a :href="user.twitter" target="_blank" rel="noopener">
+              <svg class="icon icon-twitter">
+                <use xlink:href="sprite.svg#icon-twitter"></use>
+              </svg>
+            </a>
+          </li>
+          <li v-if="user.facebook" class="profile__social-link">
+            <a :href="user.facebook" target="_blank" rel="noopener">
+              <svg class="icon icon-facebook">
+                <use xlink:href="sprite.svg#icon-facebook"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
 
-      <div
-        v-if="sessionUser && user.username === sessionUser.username"
-        class="profile__my-infos"
-      >
-        <router-link to="/compte/infos">Modifier mes informations</router-link>
+        <div
+          v-if="sessionUser && user.username === sessionUser.username"
+          class="profile__my-infos"
+        >
+          <router-link to="/compte/infos"
+            >Modifier mes informations</router-link
+          >
+        </div>
       </div>
-    </div>
-    <div v-if="!noProd" class="mt-10">
-      <router-link
-        v-if="!noProd && sessionUser && user.username === sessionUser.username"
-        to="/compte/prods"
-        class="btn btn--manage-prods"
-        >Gérer mes prods
-      </router-link>
-      <div v-if="!noProd" class="utils-container">
-        <div class="search-filter">
-          <div class="searchbar">
-            <div class="d-flex align-items-center">
-              <button class="btn btn--search">
-                <svg class="icon icon-search">
-                  <use xlink:href="sprite.svg#icon-search"></use>
-                </svg>
-              </button>
-              <input
-                type="text"
-                name=""
-                spellcheck="false"
-                class="searchbar-input"
-                placeholder="Rechercher"
-                @keyup="searchProd"
-              />
-              <button @click="showFilterMenu" class="btn btn--filter-by">
-                <span class="filter-by-indicator">Tous</span>
-                <svg class="icon icon-chevron-down--filter-by">
-                  <use xlink:href="sprite.svg#icon-chevron-down"></use>
-                </svg>
-              </button>
+      <div v-if="!noProd" class="mt-10">
+        <router-link
+          v-if="
+            !noProd && sessionUser && user.username === sessionUser.username
+          "
+          to="/compte/prods"
+          class="btn btn--manage-prods"
+          >Gérer mes prods
+        </router-link>
+        <div v-if="!noProd" class="utils-container">
+          <div class="search-filter">
+            <div class="searchbar">
+              <div class="d-flex align-items-center">
+                <button class="btn btn--search">
+                  <svg class="icon icon-search">
+                    <use xlink:href="sprite.svg#icon-search"></use>
+                  </svg>
+                </button>
+                <input
+                  type="text"
+                  name=""
+                  spellcheck="false"
+                  class="searchbar-input"
+                  placeholder="Rechercher"
+                  @keyup="searchProd"
+                />
+                <button @click="showFilterMenu" class="btn btn--filter-by">
+                  <span class="filter-by-indicator">Tous</span>
+                  <svg class="icon icon-chevron-down--filter-by">
+                    <use xlink:href="sprite.svg#icon-chevron-down"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="filter-by-menu">
+                <ul>
+                  <li @click="setFilter('Tous')">Tous</li>
+                  <li @click="setFilter('Titres')">Titres</li>
+                  <li @click="setFilter('Tags')">Tags</li>
+                </ul>
+              </div>
             </div>
-            <div class="filter-by-menu">
+          </div>
+          <div class="sort-by">
+            <button class="btn btn--sort-by" @click="showDropdownMenu">
+              Trier par
+              <svg class="icon icon-chevron-down">
+                <use xlink:href="sprite.svg#icon-chevron-down"></use>
+              </svg>
+            </button>
+            <div class="sort-by-content ">
               <ul>
-                <li @click="setFilter('Tous')">Tous</li>
-                <li @click="setFilter('Titres')">Titres</li>
-                <li @click="setFilter('Tags')">Tags</li>
+                <li @click="sortByLatest">Les plus récents</li>
+                <li @click="sortByOldest">Les plus anciens</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="sort-by">
-          <button class="btn btn--sort-by" @click="showDropdownMenu">
-            Trier par
-            <svg class="icon icon-chevron-down">
-              <use xlink:href="sprite.svg#icon-chevron-down"></use>
-            </svg>
-          </button>
-          <div class="sort-by-content ">
-            <ul>
-              <li @click="sortByLatest">Les plus récents</li>
-              <li @click="sortByOldest">Les plus anciens</li>
-            </ul>
-          </div>
+      </div>
+      <div class="cards">
+        <div class="no-result" v-if="noResult">
+          Aucun résultat
         </div>
-      </div>
-    </div>
-    <div class="cards">
-      <div class="no-result" v-if="noResult">
-        Aucun résultat
-      </div>
-      <div
-        class="no-result"
-        v-if="
-          (noProd && sessionUser && user.username !== sessionUser.username) ||
-            (noProd && !sessionUser)
-        "
-      >
-        {{ user.username }} n'a aucune prod à présenter pour le moment
-      </div>
-      <div
-        class="no-prod"
-        v-if="noProd && sessionUser && user.username === sessionUser.username"
-      >
-        <p class="no-prod__message">
-          Vous n'avez aucune prod à présenter pour le moment
-        </p>
-        <router-link to="/compte/prods/ajouter" class="btn btn--add-prod">
-          <svg class="icon icon-plus">
-            <use xlink:href="sprite.svg#icon-plus"></use>
-          </svg>
-          Ajouter une prod
-        </router-link>
-      </div>
-      <div class="card" v-for="(prod, index) of prods" :key="index">
-        <div class="image">
-          <img
-            :src="apiRoot + 'prods/images/' + prod.cover"
-            draggable="false"
-            alt="Couverture de la prod"
-          />
-          <button class="btn btn--play" @click="play(index, $event)">
-            <svg class="icon icon-controller-play">
-              <use xlink:href="sprite.svg#icon-controller-play"></use>
-            </svg>
-            <svg class="icon icon-pause">
-              <use xlink:href="sprite.svg#icon-pause"></use>
-            </svg>
-          </button>
-          <audio class="audio">
-            <source
-              :src="apiRoot + 'prods/song/' + prod.song"
-              type="audio/mpeg"
-            />
-            <source
-              :src="apiRoot + 'prods/song/' + prod.song"
-              type="audio/wav"
-            />
-          </audio>
+        <div
+          class="no-result"
+          v-if="
+            (noProd && sessionUser && user.username !== sessionUser.username) ||
+              (noProd && !sessionUser)
+          "
+        >
+          {{ user.username }} n'a aucune prod à présenter pour le moment
         </div>
-        <div class="bottom">
-          <div class="infos">
-            <div class="title">
-              {{ prod.title }}
-            </div>
-            <div class="author">
-              <router-link
-                class="author-profile-link"
-                :to="'/profil/' + prod.artist.toLowerCase()"
-                >{{ prod.artist }}</router-link
-              >
-            </div>
-            <div v-if="prod.maxStreams" class="max-streams">
-              Max streams:
-              {{ kFormatter(prod.maxStreams) }}
-            </div>
-            <div v-else class="max-streams">Max streams: illimité</div>
-            <span class="format">{{ prod.format.toUpperCase() }}</span>
-          </div>
-          <router-link :to="'/prod/' + prod._id" class="btn btn--buy">
-            <span>{{ prod.price }}€</span>
-            <svg class="icon icon-shopping-cart">
-              <use xlink:href="sprite.svg#icon-shopping-cart"></use>
+        <div
+          class="no-prod"
+          v-if="noProd && sessionUser && user.username === sessionUser.username"
+        >
+          <p class="no-prod__message">
+            Vous n'avez aucune prod à présenter pour le moment
+          </p>
+          <router-link to="/compte/prods/ajouter" class="btn btn--add-prod">
+            <svg class="icon icon-plus">
+              <use xlink:href="sprite.svg#icon-plus"></use>
             </svg>
+            Ajouter une prod
           </router-link>
+        </div>
+        <div class="card" v-for="(prod, index) of prods" :key="index">
+          <div class="image">
+            <img
+              :src="apiRoot + 'prods/images/' + prod.cover"
+              draggable="false"
+              alt="Couverture de la prod"
+            />
+            <button class="btn btn--play" @click="play(index, $event)">
+              <svg class="icon icon-controller-play">
+                <use xlink:href="sprite.svg#icon-controller-play"></use>
+              </svg>
+              <svg class="icon icon-pause">
+                <use xlink:href="sprite.svg#icon-pause"></use>
+              </svg>
+            </button>
+            <audio class="audio">
+              <source
+                :src="apiRoot + 'prods/song/' + prod.song"
+                type="audio/mpeg"
+              />
+              <source
+                :src="apiRoot + 'prods/song/' + prod.song"
+                type="audio/wav"
+              />
+            </audio>
+          </div>
+          <div class="bottom">
+            <div class="infos">
+              <div class="title">
+                {{ prod.title }}
+              </div>
+              <div class="author">
+                <router-link
+                  class="author-profile-link"
+                  :to="'/profil/' + prod.artist.toLowerCase()"
+                  >{{ prod.artist }}</router-link
+                >
+              </div>
+              <div v-if="prod.maxStreams" class="max-streams">
+                Max streams:
+                {{ kFormatter(prod.maxStreams) }}
+              </div>
+              <div v-else class="max-streams">Max streams: illimité</div>
+              <span class="format">{{ prod.format.toUpperCase() }}</span>
+            </div>
+            <router-link :to="'/prod/' + prod._id" class="btn btn--buy">
+              <span>{{ prod.price }}€</span>
+              <svg class="icon icon-shopping-cart">
+                <use xlink:href="sprite.svg#icon-shopping-cart"></use>
+              </svg>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -512,6 +518,11 @@ export default {
     padding: 3rem 1rem;
   }
 
+  .width-wrapper {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -781,54 +792,35 @@ export default {
     }
   }
   .cards {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    justify-content: space-evenly;
+    gap: 5rem;
+    margin: 4rem 0;
 
     @media (max-width: 768px) {
       justify-content: center;
     }
 
-    .no-result {
-      margin: 10rem 0;
+    .no-results,
+    .no-prods {
+      margin-top: 10rem;
       width: 100%;
       text-align: center;
-    }
 
-    .no-prod {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      margin: 10rem 0;
-
-      &__message {
-        margin-bottom: 3rem;
-        text-align: center;
-      }
-
-      .btn--add-prod {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      .btn--clear-filters {
+        background: none;
+        color: $color-white;
         border: 1px solid $color-white;
-        padding: 1.5rem 2rem;
-        text-decoration: none;
-        font-size: 1.3rem;
-
-        letter-spacing: 1px;
-        transition: letter-spacing 0.2s ease-in-out;
         text-transform: uppercase;
+        padding: 1.2rem 2rem;
+        transition: 0.2s ease-out;
+        letter-spacing: 1px;
+        font-size: 1.2rem;
+        margin-top: 2rem;
 
         &:hover {
           letter-spacing: 2px;
-        }
-
-        .icon-plus {
-          height: 20px;
-          width: 20px;
-          fill: $color-white;
-          margin-right: 0.5rem;
-          margin-left: -5px;
         }
       }
     }
@@ -836,7 +828,6 @@ export default {
     .card {
       border-radius: 3px;
       width: 250px;
-      margin: 4rem 2rem;
       word-break: break-word;
 
       .image {
