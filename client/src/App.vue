@@ -1,6 +1,10 @@
 <template>
   <div>
-    <router-view :key="$route.fullPath" />
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
     <app-sign-up-modal></app-sign-up-modal>
     <app-sign-in-modal></app-sign-in-modal>
   </div>
@@ -17,4 +21,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-active {
+  opacity: 0;
+}
+</style>

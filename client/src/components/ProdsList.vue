@@ -49,17 +49,17 @@
         </div>
       </div>
     </div>
+    <div class="no-results" v-if="noResults && !noProds">
+      <div>Aucun résultat</div>
+      <button
+        v-if="!noProds"
+        class="btn btn--clear-filters"
+        @click="clearFilters"
+      >
+        Retirer les filtres
+      </button>
+    </div>
     <div class="cards">
-      <div class="no-results" v-if="noResults && !noProds">
-        <div>Aucun résultat</div>
-        <button
-          v-if="!noProds"
-          class="btn btn--clear-filters"
-          @click="clearFilters"
-        >
-          Retirer les filtres
-        </button>
-      </div>
       <div class="no-prods" v-if="noProds">
         <div>Aucune prod n'a encore été ajoutée</div>
       </div>
@@ -666,6 +666,29 @@ export default {
   }
 }
 
+.no-results,
+.no-prods {
+  margin-top: 10rem;
+  width: 100%;
+  text-align: center;
+
+  .btn--clear-filters {
+    background: none;
+    color: $color-white;
+    border: 1px solid $color-white;
+    text-transform: uppercase;
+    padding: 1.2rem 2rem;
+    transition: 0.2s ease-out;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+
+    &:hover {
+      letter-spacing: 2px;
+    }
+  }
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, 250px);
@@ -676,30 +699,6 @@ export default {
   @media (max-width: 768px) {
     justify-content: center;
   }
-
-  .no-results,
-  .no-prods {
-    margin-top: 10rem;
-    width: 100%;
-    text-align: center;
-
-    .btn--clear-filters {
-      background: none;
-      color: $color-white;
-      border: 1px solid $color-white;
-      text-transform: uppercase;
-      padding: 1.2rem 2rem;
-      transition: 0.2s ease-out;
-      letter-spacing: 1px;
-      font-size: 1.2rem;
-      margin-top: 2rem;
-
-      &:hover {
-        letter-spacing: 2px;
-      }
-    }
-  }
-
   .card {
     border-radius: 3px;
     width: 250px;

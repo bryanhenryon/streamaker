@@ -89,7 +89,7 @@
                   @keyup="searchProd"
                 />
                 <button @click="showFilterMenu" class="btn btn--filter-by">
-                  <span class="filter-by-indicator">Tous</span>
+                  <span class="filter-by-indicator">{{ filterBy }}</span>
                   <svg class="icon icon-chevron-down--filter-by">
                     <use xlink:href="sprite.svg#icon-chevron-down"></use>
                   </svg>
@@ -120,10 +120,17 @@
           </div>
         </div>
       </div>
+      <div class="no-results" v-if="noResult">
+        <div>Aucun résultat</div>
+        <button
+          v-if="!noProd"
+          class="btn btn--clear-filters"
+          @click="clearFilters"
+        >
+          Retirer les filtres
+        </button>
+      </div>
       <div class="cards">
-        <div class="no-result" v-if="noResult">
-          Aucun résultat
-        </div>
         <div
           class="no-result"
           v-if="
@@ -232,8 +239,7 @@ export default {
       user: "",
       prods: null,
       noProd: null,
-      noResult: null,
-      filterBy: "Tous"
+      noResult: null
     };
   },
   computed: {
@@ -246,6 +252,9 @@ export default {
     ...mapGetters("player", {
       songVolume: "getSongVolume"
     }),
+    ...mapGetters("prodsList", {
+      filterBy: "getFilterBy"
+    }),
     accountCreationDate() {
       const date = new Date(this.user.createdAt);
       return (
@@ -254,6 +263,19 @@ export default {
     }
   },
   methods: {
+    clearFilters() {
+      this.$store.dispatch("prodsList/setFilterBy", "Tous");
+      document.querySelector(".searchbar-input").value = "";
+
+      axios
+        .get(this.apiRoot + "prods/" + this.$route.params.username)
+        .then(res => {
+          const prods = res.data;
+          prods.length === 0 ? (this.noResult = true) : (this.noResult = false);
+          this.prods = prods;
+        })
+        .catch(error => console.log(error));
+    },
     kFormatter(num) {
       return Math.abs(num) > 999
         ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
@@ -263,7 +285,8 @@ export default {
       const searchValue = document
         .querySelector(".searchbar-input")
         .value.toLowerCase();
-      this.filterBy = filter;
+
+      this.$store.dispatch("prodsList/setFilterBy", filter);
 
       axios
         .get(this.apiRoot + "prods")
@@ -804,6 +827,30 @@ export default {
       }
     }
   }
+
+  .no-results,
+  .no-prods {
+    margin-top: 10rem;
+    width: 100%;
+    text-align: center;
+
+    .btn--clear-filters {
+      background: none;
+      color: $color-white;
+      border: 1px solid $color-white;
+      text-transform: uppercase;
+      padding: 1.2rem 2rem;
+      transition: 0.2s ease-out;
+      letter-spacing: 1px;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+
+      &:hover {
+        letter-spacing: 2px;
+      }
+    }
+  }
+
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
@@ -813,29 +860,6 @@ export default {
 
     @media (max-width: 768px) {
       justify-content: center;
-    }
-
-    .no-results,
-    .no-prods {
-      margin-top: 10rem;
-      width: 100%;
-      text-align: center;
-
-      .btn--clear-filters {
-        background: none;
-        color: $color-white;
-        border: 1px solid $color-white;
-        text-transform: uppercase;
-        padding: 1.2rem 2rem;
-        transition: 0.2s ease-out;
-        letter-spacing: 1px;
-        font-size: 1.2rem;
-        margin-top: 2rem;
-
-        &:hover {
-          letter-spacing: 2px;
-        }
-      }
     }
 
     .card {

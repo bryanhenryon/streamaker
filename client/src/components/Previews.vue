@@ -4,10 +4,10 @@
       <h2 class="news">Derniers ajouts</h2>
       <router-link to="/prods" class="btn btn--see-all">Tout voir</router-link>
     </div>
+    <div class="no-results" v-if="noResults">
+      Aucune prod n'a encore été ajoutée
+    </div>
     <div class="cards">
-      <div class="no-results" v-if="noResults">
-        Aucune prod n'a encore été ajoutée
-      </div>
       <div class="card" v-for="(prod, index) of latestProds" :key="index">
         <div class="image">
           <img
@@ -238,6 +238,12 @@ export default {
     letter-spacing: 0.5px;
   }
 
+  .no-results {
+    margin: 10rem 0;
+    width: 100%;
+    text-align: center;
+  }
+
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -248,12 +254,6 @@ export default {
 
     @media (max-width: 768px) {
       justify-content: center;
-    }
-
-    .no-results {
-      margin: 10rem 0;
-      width: 100%;
-      text-align: center;
     }
 
     .card {
