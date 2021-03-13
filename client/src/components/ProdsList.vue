@@ -362,6 +362,11 @@ export default {
 
         if (btn !== $event.currentTarget) {
           btn.nextSibling.currentTime = 0;
+          btn.style.display = "";
+          btn.style.background = "rgba(0, 0, 0, 0.7)";
+        } else {
+          btn.style.display = "block";
+          btn.style.background = "rgba(0, 0, 0, 0.7)";
         }
       }
 

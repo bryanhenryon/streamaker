@@ -167,6 +167,11 @@ export default {
 
         if (playButton !== nextTarget) {
           playButton.nextSibling.currentTime = 0;
+          playButton.style.display = "";
+          playButton.style.background = "rgba(0, 0, 0, 0.7)";
+        } else {
+          playButton.style.display = "block";
+          playButton.style.background = "rgba(0, 0, 0, 0.7)";
         }
       }
 
@@ -233,6 +238,11 @@ export default {
 
         if (playButton !== nextTarget) {
           playButton.nextSibling.currentTime = 0;
+          playButton.style.display = "";
+          playButton.style.background = "rgba(0, 0, 0, 0.7)";
+        } else {
+          playButton.style.display = "block";
+          playButton.style.background = "rgba(0, 0, 0, 0.7)";
         }
       }
 
