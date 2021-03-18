@@ -12,7 +12,7 @@ import LegalNotices from "../views/LegalNotices";
 import NotFound from "../views/NotFound";
 import store from "../store";
 
-const siteName = "Projet Akim";
+const siteName = "Streamaker";
 
 const routes = [
   {

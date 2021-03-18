@@ -347,7 +347,7 @@ export default {
   background: linear-gradient(rgba(rgb(0, 0, 0), 0.7), rgba($color-black, 1)),
     url("../assets/img/profile-background.jpg") center center fixed;
   background-size: cover;
-  padding: 3rem 6rem;
+  padding: 0 6rem;
   min-height: 100vh;
 
   @media (max-width: 768px) {

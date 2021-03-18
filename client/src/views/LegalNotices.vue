@@ -32,7 +32,7 @@
         intellectuelle ou détient les droits d’usage sur tous les éléments
         accessibles sur le site, tant sur la structure que sur les textes,
         images, graphismes, logo, icônes, sons, logiciels… Toute reproduction
-        totale ou partielle du site &lt;nom du site&gt;, représentation,
+        totale ou partielle du site www.streamaker.com, représentation,
         modification, publication, adaptation totale ou partielle de l'un
         quelconque de ces éléments, quel que soit le moyen ou le procédé
         utilisé, est interdite, sauf autorisation écrite préalable de Akim
@@ -67,7 +67,7 @@ a {
   background: linear-gradient(rgba(rgb(0, 0, 0), 0.7), rgba($color-black, 1)),
     url("../assets/img/profile-background.jpg") center center fixed;
   background-size: cover;
-  padding: 3rem 6rem;
+  padding: 0 6rem;
   min-height: 100vh;
 
   @media (max-width: 768px) {

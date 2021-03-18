@@ -193,7 +193,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     max-width: 1920px;
     margin: 0 auto;
 

@@ -2,7 +2,7 @@
   <div class="content-container">
     <div class="content">
       <h1>
-        Phrase d'accroche importante pour le référencement
+        Achète tes instrus en quelques clics
       </h1>
       <form class="searchbar" @submit.prevent="search">
         <div class="d-flex align-items-center">
@@ -127,7 +127,7 @@ export default {
     }
 
     h1 {
-      font-size: 4rem;
+      font-size: 4.2rem;
       margin-bottom: 2rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;

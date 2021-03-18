@@ -36,7 +36,7 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   box-shadow: inset 1rem 3rem 10rem 1rem $color-black;
-  padding: 3rem 6rem;
+  padding: 0 6rem;
 
   @media (max-width: 680px) {
     padding: 2rem 2rem;

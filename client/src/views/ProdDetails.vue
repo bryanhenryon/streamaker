@@ -148,7 +148,7 @@ export default {
 <style lang="scss" scoped>
 .prod-details {
   color: $color-white;
-  padding: 3rem 6rem;
+  padding: 0 6rem;
   min-height: 100vh;
   background: linear-gradient(rgba(rgb(0, 0, 0), 0.7), rgba($color-black, 1)),
     url("../assets/img/profile-background.jpg") center center fixed;

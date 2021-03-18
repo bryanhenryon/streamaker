@@ -1,6 +1,10 @@
 <template>
   <nav class="navbar">
-    <div class="navbar_link navbar_logo">LOGO / NOM DU SITE</div>
+    <div class="navbar_link navbar_logo">
+      <router-link to="/">
+        <img src="@/assets/img/logo.png" alt="" />
+      </router-link>
+    </div>
     <div class="navbar_links">
       <router-link :to="{ name: 'Home' }" class="navbar_link navbar_link--home"
         >Accueil</router-link
@@ -133,8 +137,14 @@ export default {
   &_logo {
     margin-right: 1rem;
     color: $color-white;
+    width: 125px;
     @media (max-width: 1024px) {
       font-size: 1.8rem;
+      width: 90px;
+    }
+
+    img {
+      width: 100%;
     }
   }
 

@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    &copy; {{ copyrightYear }} Setbon Akim &mdash;
+    &copy; {{ copyrightYear }} Akim Beats &mdash;
     <router-link to="/mentions-legales" class="legal-notices-link"
       >Mentions légales</router-link
     >
