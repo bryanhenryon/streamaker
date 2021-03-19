@@ -27,14 +27,14 @@ export default {
   color: $color-white;
 
   &__container {
-    padding: 3rem 6rem;
+    padding: 0 6rem;
 
     @media (max-width: 768px) {
-      padding: 3rem 2rem;
+      padding: 0 2rem;
     }
 
     @media (max-width: 320px) {
-      padding: 3rem 1rem;
+      padding: 0 1rem;
     }
   }
 }

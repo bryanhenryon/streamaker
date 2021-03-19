@@ -98,11 +98,11 @@ export default {
   min-height: 100vh;
 
   @media (max-width: 768px) {
-    padding: 3rem 2rem;
+    padding: 0 2rem;
   }
 
   @media (max-width: 320px) {
-    padding: 3rem 1rem;
+    padding: 0 1rem;
   }
 
   &__main-message {

@@ -147,19 +147,21 @@ export default {
 
 <style lang="scss" scoped>
 .prod-details {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   color: $color-white;
   padding: 0 6rem;
-  min-height: 100vh;
   background: linear-gradient(rgba(rgb(0, 0, 0), 0.7), rgba($color-black, 1)),
     url("../assets/img/profile-background.jpg") center center fixed;
   background-size: cover;
 
   @media (max-width: 768px) {
-    padding: 3rem 2rem;
+    padding: 0 2rem;
   }
 
   @media (max-width: 320px) {
-    padding: 3rem 2rem;
+    padding: 0 2rem;
   }
 }
 
@@ -170,6 +172,7 @@ export default {
 .container {
   max-width: 600px;
   margin: 10rem auto;
+  flex: 1;
 
   @media (max-width: 768px) {
     margin: 5rem auto;
@@ -189,6 +192,8 @@ export default {
 
 .image-wrapper {
   height: 300px;
+  min-width: 300px;
+  width: 300px;
   margin-right: 5rem;
   flex: 1;
   @media (max-width: 768px) {
