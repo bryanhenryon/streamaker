@@ -42,7 +42,7 @@
         </button>
         <div class="sort-by-content ">
           <ul>
-            <!-- <li>Les meilleures ventes</li> -->
+            <li @click="sortByBestSells">Les meilleures ventes</li>
             <li @click="sortByLatest">Les plus récents</li>
             <li @click="sortByOldest">Les plus anciens</li>
           </ul>
@@ -308,6 +308,22 @@ export default {
           }
 
           this.prods = filteredProds;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    sortByBestSells() {
+      axios
+        .get(this.apiRoot + "prods")
+        .then(res => {
+          const prods = res.data;
+
+          const sortedProds = prods.sort((a, b) =>
+            b.sells > a.sells ? 1 : -1
+          );
+
+          this.prods = sortedProds;
         })
         .catch(error => {
           console.log(error);

@@ -44,6 +44,10 @@ const prodsSchema = new mongoose.Schema({
         if(isNaN(price)) throw new Error("La valeur est invalide");
       }
   },
+  sells: {
+    type: Number,
+    default: 0
+  },
   maxStreams: {
     type: String,
     default: "illimité"

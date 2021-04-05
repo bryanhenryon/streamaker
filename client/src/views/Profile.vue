@@ -113,6 +113,7 @@
             </button>
             <div class="sort-by-content ">
               <ul>
+                <li @click="sortByBestSells">Les meilleures ventes</li>
                 <li @click="sortByLatest">Les plus récents</li>
                 <li @click="sortByOldest">Les plus anciens</li>
               </ul>
@@ -383,6 +384,22 @@ export default {
       btnSortBy.classList.remove("active");
       iconChevronDown.style.transform = "rotate(0)";
       dropdownMenu.style.display = "none";
+    },
+    sortByBestSells() {
+      axios
+        .get(this.apiRoot + "prods/" + this.$route.params.username)
+        .then(res => {
+          const prods = res.data;
+
+          const sortedProds = prods.sort((a, b) =>
+            b.sells > a.sells ? 1 : -1
+          );
+
+          this.prods = sortedProds;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     sortByLatest() {
       axios

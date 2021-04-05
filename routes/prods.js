@@ -4,6 +4,7 @@ const express = require("express");
 const Prods = require("../models/prods");
 const multer = require("multer");
 const auth = require("../middlewares/auth");
+const { pathToFileURL } = require("url");
 
 const router = express.Router();
 
@@ -25,6 +26,20 @@ router.get("/api/prod/:id", async (req, res) => {
         res.type('json').send(stringified);
     } catch (error) {
         console.log(error);
+    }
+});
+
+router.patch("/api/new-sale/:id", async (req,res) => {
+    try {
+        const prod = await Prods.findOne({_id: req.params.id});
+        prod.sells++;
+
+        await prod.save();
+
+        res.send();
+
+    } catch (error) {
+        res.send(error);
     }
 });
 

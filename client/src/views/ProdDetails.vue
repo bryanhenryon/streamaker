@@ -103,6 +103,9 @@ export default {
                   originalSongName: this.prod.songToDisplay
                 });
                 this.$store.dispatch("setSuccessfulTransaction", true);
+                axios.patch(this.apiRoot + "new-sale/" + this.$route.params.id);
+              })
+              .then(() => {
                 this.isLoading = false;
                 this.$router.push("/confirmation-transaction");
               })

@@ -1,68 +1,148 @@
 <template>
   <section class="previews">
-    <div class="section-title">
-      <h2 class="news">Derniers ajouts</h2>
-      <router-link to="/prods" class="btn btn--see-all">Tout voir</router-link>
-    </div>
-    <div class="no-results" v-if="noResults">
-      Aucune prod n'a encore été ajoutée
-    </div>
-    <div class="cards">
-      <div class="card" v-for="(prod, index) of latestProds" :key="index">
-        <div class="image">
-          <img
-            :src="apiRoot + 'prods/images/' + prod.cover"
-            draggable="false"
-            alt=""
-          />
-          <button class="btn btn--play" @click="play(index, prod._id, $event)">
-            <svg class="icon icon-controller-play">
-              <use xlink:href="sprite.svg#icon-controller-play"></use>
-            </svg>
-            <svg class="icon icon-pause">
-              <use xlink:href="sprite.svg#icon-pause"></use>
-            </svg>
-          </button>
-          <audio class="audio">
-            <source
-              :src="apiRoot + 'prods/song/' + prod.song"
-              type="audio/mpeg"
+    <div class="best-sellers">
+      <div class="section-title">
+        <h2 class="news">Meilleures ventes</h2>
+        <router-link to="/prods" class="btn btn--see-all"
+          >Tout voir</router-link
+        >
+      </div>
+      <div class="no-results" v-if="noResults">
+        Aucune prod n'a encore été ajoutée
+      </div>
+      <div class="cards">
+        <div class="card" v-for="(prod, index) of bestSellers" :key="index">
+          <div class="image">
+            <img
+              :src="apiRoot + 'prods/images/' + prod.cover"
+              draggable="false"
+              alt=""
             />
-            <source
-              :src="apiRoot + 'prods/song/' + prod.song"
-              type="audio/wav"
-            />
-          </audio>
-        </div>
-        <div class="bottom">
-          <div class="infos">
-            <router-link :to="'/prod/' + prod._id" class="title">{{
-              prod.title
-            }}</router-link>
-            <div class="author">
-              <router-link
-                class="author-profile-link"
-                :to="'/profil/' + prod.artist.toLowerCase()"
-                >{{ prod.artist }}</router-link
-              >
-            </div>
-            <div v-if="prod.maxStreams" class="max-streams">
-              Max streams:
-              {{ kFormatter(prod.maxStreams) }}
-            </div>
-            <div v-else class="max-streams">Max streams: illimité</div>
-            <span class="format">{{ prod.format.toUpperCase() }}</span>
+            <button
+              class="btn btn--play"
+              @click="play(index, prod._id, $event)"
+            >
+              <svg class="icon icon-controller-play">
+                <use xlink:href="sprite.svg#icon-controller-play"></use>
+              </svg>
+              <svg class="icon icon-pause">
+                <use xlink:href="sprite.svg#icon-pause"></use>
+              </svg>
+            </button>
+            <audio class="audio">
+              <source
+                :src="apiRoot + 'prods/song/' + prod.song"
+                type="audio/mpeg"
+              />
+              <source
+                :src="apiRoot + 'prods/song/' + prod.song"
+                type="audio/wav"
+              />
+            </audio>
           </div>
-          <router-link
-            :to="'/prod/' + prod._id"
-            class="btn btn--buy"
-            :data-id="prod._id"
-          >
-            <span>{{ prod.price }}€</span>
-            <svg class="icon icon-shopping-cart">
-              <use xlink:href="sprite.svg#icon-shopping-cart"></use>
-            </svg>
-          </router-link>
+          <div class="bottom">
+            <div class="infos">
+              <router-link :to="'/prod/' + prod._id" class="title">{{
+                prod.title
+              }}</router-link>
+              <div class="author">
+                <router-link
+                  class="author-profile-link"
+                  :to="'/profil/' + prod.artist.toLowerCase()"
+                  >{{ prod.artist }}</router-link
+                >
+              </div>
+              <div v-if="prod.maxStreams" class="max-streams">
+                Max streams:
+                {{ kFormatter(prod.maxStreams) }}
+              </div>
+              <div v-else class="max-streams">Max streams: illimité</div>
+              <span class="format">{{ prod.format.toUpperCase() }}</span>
+            </div>
+            <router-link
+              :to="'/prod/' + prod._id"
+              class="btn btn--buy"
+              :data-id="prod._id"
+            >
+              <span>{{ prod.price }}€</span>
+              <svg class="icon icon-shopping-cart">
+                <use xlink:href="sprite.svg#icon-shopping-cart"></use>
+              </svg>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="last-uploads">
+      <div class="section-title">
+        <h2 class="news">Derniers ajouts</h2>
+        <router-link to="/prods" class="btn btn--see-all"
+          >Tout voir</router-link
+        >
+      </div>
+      <div class="no-results" v-if="noResults">
+        Aucune prod n'a encore été ajoutée
+      </div>
+      <div class="cards">
+        <div class="card" v-for="(prod, index) of latestProds" :key="index">
+          <div class="image">
+            <img
+              :src="apiRoot + 'prods/images/' + prod.cover"
+              draggable="false"
+              alt=""
+            />
+            <button
+              class="btn btn--play"
+              @click="play(index, prod._id, $event)"
+            >
+              <svg class="icon icon-controller-play">
+                <use xlink:href="sprite.svg#icon-controller-play"></use>
+              </svg>
+              <svg class="icon icon-pause">
+                <use xlink:href="sprite.svg#icon-pause"></use>
+              </svg>
+            </button>
+            <audio class="audio">
+              <source
+                :src="apiRoot + 'prods/song/' + prod.song"
+                type="audio/mpeg"
+              />
+              <source
+                :src="apiRoot + 'prods/song/' + prod.song"
+                type="audio/wav"
+              />
+            </audio>
+          </div>
+          <div class="bottom">
+            <div class="infos">
+              <router-link :to="'/prod/' + prod._id" class="title">{{
+                prod.title
+              }}</router-link>
+              <div class="author">
+                <router-link
+                  class="author-profile-link"
+                  :to="'/profil/' + prod.artist.toLowerCase()"
+                  >{{ prod.artist }}</router-link
+                >
+              </div>
+              <div v-if="prod.maxStreams" class="max-streams">
+                Max streams:
+                {{ kFormatter(prod.maxStreams) }}
+              </div>
+              <div v-else class="max-streams">Max streams: illimité</div>
+              <span class="format">{{ prod.format.toUpperCase() }}</span>
+            </div>
+            <router-link
+              :to="'/prod/' + prod._id"
+              class="btn btn--buy"
+              :data-id="prod._id"
+            >
+              <span>{{ prod.price }}€</span>
+              <svg class="icon icon-shopping-cart">
+                <use xlink:href="sprite.svg#icon-shopping-cart"></use>
+              </svg>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -82,6 +162,7 @@ export default {
   data() {
     return {
       latestProds: null,
+      bestSellers: null,
       noResults: null
     };
   },
@@ -181,6 +262,19 @@ export default {
       .catch(error => {
         console.log(error);
       });
+
+    axios
+      .get(this.apiRoot + "prods")
+      .then(res => {
+        const data = res.data;
+        data.length === 0 ? (this.noResults = true) : (this.noResults = false);
+        const sortedData = data.sort((a, b) => (b.sells > a.sells ? 1 : -1));
+        const slicedData = sortedData.slice(0, 5);
+        this.bestSellers = slicedData;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>
@@ -188,6 +282,10 @@ export default {
 <style lang="scss" scoped>
 .previews {
   margin-top: 8rem;
+
+  .best-sellers {
+    margin-bottom: 8rem;
+  }
 
   .section-title {
     display: flex;
