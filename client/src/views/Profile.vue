@@ -173,7 +173,7 @@
                 <use xlink:href="sprite.svg#icon-pause"></use>
               </svg>
             </button>
-            <audio class="audio">
+            <audio class="audio" v-if="renderComponent">
               <source
                 :src="apiRoot + 'prods/song/' + prod.song"
                 type="audio/mpeg"
@@ -240,7 +240,8 @@ export default {
       user: "",
       prods: null,
       noProd: null,
-      noResult: null
+      noResult: null,
+      renderComponent: true
     };
   },
   computed: {
@@ -264,6 +265,13 @@ export default {
     }
   },
   methods: {
+    forceRerender() {
+      this.renderComponent = false;
+
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
     clearFilters() {
       this.$store.dispatch("prodsList/setFilterBy", "Tous");
       document.querySelector(".searchbar-input").value = "";
@@ -395,7 +403,19 @@ export default {
             b.sells > a.sells ? 1 : -1
           );
 
+          document.querySelector(".player").classList.remove("playing");
+          for (let btn of document.querySelectorAll(".btn--play2")) {
+            btn.classList.remove("playing");
+          }
+
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.classList.remove("active");
+          }
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.style.display = "none";
+          }
           this.prods = sortedProds;
+          this.forceRerender();
         })
         .catch(error => {
           console.log(error);
@@ -406,10 +426,23 @@ export default {
         .get(this.apiRoot + "prods/" + this.$route.params.username)
         .then(res => {
           const prods = res.data;
+
           const sortedProds = prods.sort((a, b) =>
             b.createdAt > a.createdAt ? 1 : -1
           );
+          document.querySelector(".player").classList.remove("playing");
+          for (let btn of document.querySelectorAll(".btn--play2")) {
+            btn.classList.remove("playing");
+          }
+
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.classList.remove("active");
+          }
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.style.display = "none";
+          }
           this.prods = sortedProds;
+          this.forceRerender();
         })
         .catch(error => {
           console.log(error);
@@ -420,10 +453,23 @@ export default {
         .get(this.apiRoot + "prods/" + this.$route.params.username)
         .then(res => {
           const prods = res.data;
+
           const sortedProds = prods.sort((a, b) =>
             a.createdAt > b.createdAt ? 1 : -1
           );
+          document.querySelector(".player").classList.remove("playing");
+          for (let btn of document.querySelectorAll(".btn--play2")) {
+            btn.classList.remove("playing");
+          }
+
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.classList.remove("active");
+          }
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.style.display = "none";
+          }
           this.prods = sortedProds;
+          this.forceRerender();
         })
         .catch(error => {
           console.log(error);
@@ -893,7 +939,7 @@ export default {
         @media (min-width: 1024px) {
           &:hover {
             .btn--play {
-              display: block;
+              display: block !important;
               background: rgba($color: #000, $alpha: 0.7);
 
               &.active {

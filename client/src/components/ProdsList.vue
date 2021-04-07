@@ -78,7 +78,7 @@
               <use xlink:href="sprite.svg#icon-pause"></use>
             </svg>
           </button>
-          <audio class="audio">
+          <audio class="audio" v-if="renderComponent">
             <source
               :src="apiRoot + 'prods/song/' + prod.song"
               type="audio/mpeg"
@@ -133,7 +133,8 @@ export default {
     return {
       prods: null,
       noResults: false,
-      noProds: null
+      noProds: null,
+      renderComponent: true
     };
   },
   computed: {
@@ -148,6 +149,13 @@ export default {
     })
   },
   methods: {
+    forceRerender() {
+      this.renderComponent = false;
+
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
     kFormatter(num) {
       return Math.abs(num) > 999
         ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
@@ -323,7 +331,19 @@ export default {
             b.sells > a.sells ? 1 : -1
           );
 
+          document.querySelector(".player").classList.remove("playing");
+          for (let btn of document.querySelectorAll(".btn--play2")) {
+            btn.classList.remove("playing");
+          }
+
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.classList.remove("active");
+          }
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.style.display = "none";
+          }
           this.prods = sortedProds;
+          this.forceRerender();
         })
         .catch(error => {
           console.log(error);
@@ -338,8 +358,19 @@ export default {
           const sortedProds = prods.sort((a, b) =>
             b.createdAt > a.createdAt ? 1 : -1
           );
+          document.querySelector(".player").classList.remove("playing");
+          for (let btn of document.querySelectorAll(".btn--play2")) {
+            btn.classList.remove("playing");
+          }
 
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.classList.remove("active");
+          }
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.style.display = "none";
+          }
           this.prods = sortedProds;
+          this.forceRerender();
         })
         .catch(error => {
           console.log(error);
@@ -354,8 +385,19 @@ export default {
           const sortedProds = prods.sort((a, b) =>
             a.createdAt > b.createdAt ? 1 : -1
           );
+          document.querySelector(".player").classList.remove("playing");
+          for (let btn of document.querySelectorAll(".btn--play2")) {
+            btn.classList.remove("playing");
+          }
 
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.classList.remove("active");
+          }
+          for (let btn of document.querySelectorAll(".btn--play")) {
+            btn.style.display = "none";
+          }
           this.prods = sortedProds;
+          this.forceRerender();
         })
         .catch(error => {
           console.log(error);
@@ -729,7 +771,7 @@ export default {
       @media (min-width: 1024px) {
         &:hover {
           .btn--play {
-            display: block;
+            display: block !important;
             background: rgba($color: #000, $alpha: 0.7);
 
             &.active {
