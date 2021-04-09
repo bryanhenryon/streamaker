@@ -59,10 +59,10 @@
         Retirer les filtres
       </button>
     </div>
+    <div class="no-prods" v-if="noProds">
+      <div>Aucune prod n'a encore été ajoutée</div>
+    </div>
     <div class="cards">
-      <div class="no-prods" v-if="noProds">
-        <div>Aucune prod n'a encore été ajoutée</div>
-      </div>
       <div class="card" v-for="(prod, index) of prods" :key="index">
         <div class="image">
           <img

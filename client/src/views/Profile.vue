@@ -131,30 +131,30 @@
           Retirer les filtres
         </button>
       </div>
+      <div
+        class="no-prod"
+        v-if="noProd && sessionUser && user.username === sessionUser.username"
+      >
+        <p class="no-prod__message">
+          Vous n'avez aucune prod à présenter pour le moment
+        </p>
+        <router-link to="/compte/prods/ajouter" class="btn btn--add-prod">
+          <svg class="icon icon-plus">
+            <use xlink:href="sprite.svg#icon-plus"></use>
+          </svg>
+          Ajouter une prod
+        </router-link>
+      </div>
+      <div
+        class="no-results"
+        v-if="
+          (noProd && sessionUser && user.username !== sessionUser.username) ||
+            (noProd && !sessionUser)
+        "
+      >
+        {{ user.username }} n'a aucune prod à présenter pour le moment
+      </div>
       <div class="cards">
-        <div
-          class="no-result"
-          v-if="
-            (noProd && sessionUser && user.username !== sessionUser.username) ||
-              (noProd && !sessionUser)
-          "
-        >
-          {{ user.username }} n'a aucune prod à présenter pour le moment
-        </div>
-        <div
-          class="no-prod"
-          v-if="noProd && sessionUser && user.username === sessionUser.username"
-        >
-          <p class="no-prod__message">
-            Vous n'avez aucune prod à présenter pour le moment
-          </p>
-          <router-link to="/compte/prods/ajouter" class="btn btn--add-prod">
-            <svg class="icon icon-plus">
-              <use xlink:href="sprite.svg#icon-plus"></use>
-            </svg>
-            Ajouter une prod
-          </router-link>
-        </div>
         <div class="card" v-for="(prod, index) of prods" :key="index">
           <div class="image">
             <img
@@ -908,10 +908,41 @@ export default {
   }
 
   .no-results,
-  .no-prods {
+  .no-prod {
     margin-top: 10rem;
     width: 100%;
     text-align: center;
+
+    &__message {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .btn--add-prod {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid $color-white;
+      padding: 1.5rem 2rem;
+      text-decoration: none;
+      font-size: 1.3rem;
+
+      letter-spacing: 1px;
+      transition: letter-spacing 0.2s ease-in-out;
+      text-transform: uppercase;
+
+      &:hover {
+        letter-spacing: 2px;
+      }
+
+      .icon-plus {
+        height: 20px;
+        width: 20px;
+        fill: $color-white;
+        margin-right: 0.5rem;
+        margin-left: -5px;
+      }
+    }
 
     .btn--clear-filters {
       background: none;
