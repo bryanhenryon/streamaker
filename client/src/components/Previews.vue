@@ -347,7 +347,7 @@ export default {
   }
 
   .news {
-    font-size: 3.6rem;
+    font-size: 3.2rem;
     letter-spacing: 0.5px;
   }
 

@@ -559,7 +559,7 @@ export default {
   }
 
   .title {
-    font-size: 4.2rem;
+    font-size: 4rem;
     margin-bottom: 3rem;
 
     @media (max-width: 1024px) {

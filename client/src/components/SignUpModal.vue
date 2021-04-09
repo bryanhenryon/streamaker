@@ -377,7 +377,7 @@ export default {
   }
 
   &__header {
-    font-size: 3.6rem;
+    font-size: 3.2rem;
 
     margin-bottom: 3rem;
   }
