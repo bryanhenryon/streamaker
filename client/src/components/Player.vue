@@ -1,5 +1,16 @@
 <template>
   <div class="player">
+    <input
+      v-if="song"
+      type="range"
+      @change="change_duration()"
+      v-model="sliderPosition"
+      min="0"
+      :max="getSongDuration"
+      step="any"
+      name="browse-song"
+      id="browse-song"
+    />
     <div class="utils">
       <div class="track-infos">
         <div class="track-infos__image">
@@ -101,8 +112,21 @@ export default {
   computed: {
     ...mapGetters({
       song: "player/getPlayingSong",
-      songVolume2: "player/getSongVolume"
-    })
+      songVolume2: "player/getSongVolume",
+      sliderValue: "player/getSliderValue"
+    }),
+    getSongDuration() {
+      return this.song.target.nextSibling.duration;
+    },
+    sliderPosition: {
+      get() {
+        return this.sliderValue;
+      },
+      set(value) {
+        console.log("DUREE TOTALE" + this.song.target.nextSibling.duration);
+        this.$store.dispatch("player/changeDuration", value);
+      }
+    }
   },
   methods: {
     play() {
@@ -111,11 +135,23 @@ export default {
         this.song.target.classList.remove("active");
         document.querySelector(".btn--play2").classList.remove("playing");
         this.song.target.nextSibling.pause();
+        this.$store.dispatch("player/stopCounter");
       } else {
         this.song.target.classList.add("active");
         this.song.target.nextSibling.play();
+        this.$store.dispatch("player/startCounter");
         document.querySelector(".btn--play2").classList.add("playing");
       }
+    },
+    change_duration() {
+      const isPlaying = this.song.target.classList.contains("active");
+      if (!isPlaying) {
+        this.song.target.classList.add("active");
+        document.querySelector(".btn--play2").classList.add("playing");
+        this.song.target.nextSibling.play();
+      }
+      const slider_position = (this.song.target.nextSibling.currentTime = this.sliderValue);
+      console.log(slider_position);
     },
     loop() {
       const loopBtn = document.querySelector(".btn--loop");
@@ -205,6 +241,8 @@ export default {
       };
 
       this.$store.dispatch("player/playingSong", playingSong);
+      this.$store.dispatch("player/resetCounter");
+      this.$store.dispatch("player/startCounter");
     },
     next() {
       document.querySelector(".btn--play2").classList.add("playing");
@@ -276,6 +314,8 @@ export default {
       };
 
       this.$store.dispatch("player/playingSong", playingSong);
+      this.$store.dispatch("player/resetCounter");
+      this.$store.dispatch("player/startCounter");
     }
   }
 };
@@ -283,9 +323,6 @@ export default {
 
 <style lang="scss" scoped>
 .player {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
   left: 0;
   right: 0;
@@ -305,7 +342,81 @@ export default {
     transform: translateY(0);
   }
 
+  #browse-song {
+    display: block;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+
+    /* Enlève le style par défaut des navigateurs */
+    -webkit-appearance: none;
+
+    /* Enlève le style par défaut des navigateurs */
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+    }
+
+    /* Enlève le style par défaut des navigateurs */
+    &:focus {
+      outline: none;
+    }
+
+    /* Enlève le style par défaut des navigateurs */
+    &::-ms-track {
+      width: 100%;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 1.6rem;
+      width: 1.6rem;
+      border-radius: 50%;
+      background: $color-white;
+      cursor: grab;
+      margin-top: -0.6rem;
+      transition: 0.1s ease-in-out;
+
+      &:hover {
+        background:red;
+        transform:scale(1.5);
+      }
+    }
+
+    &::-moz-range-thumb {
+      -webkit-appearance: none;
+      height: 1.6rem;
+      width: 1.6rem;
+      border: none;
+      outline: none;
+      border-radius: 50%;
+      background: $color-white;
+      cursor: grab;
+      margin-top: -0.5rem;
+    }
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 3px;
+      background: $color-white;
+      border-radius: 100px;
+      cursor: pointer;
+    }
+
+    &::-moz-range-track {
+      width: 100%;
+      height: 5px;
+      background: $color-white;
+      border-radius: 100px;
+      cursor: pointer;
+    }
+  }
+
   .utils {
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;

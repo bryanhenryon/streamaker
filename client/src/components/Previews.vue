@@ -163,7 +163,8 @@ export default {
     return {
       latestProds: null,
       bestSellers: null,
-      noResults: null
+      noResults: null,
+      currentSongId: null
     };
   },
   computed: {
@@ -205,6 +206,7 @@ export default {
         } else {
           btn.style.display = "block";
           btn.style.background = "rgba(0, 0, 0, 0.7)";
+          this.$store.dispatch("player/stopCounter");
         }
       }
 
@@ -212,9 +214,23 @@ export default {
         $event.currentTarget.classList.remove("active");
         document.querySelector(".btn--play2").classList.remove("playing");
         audio.pause();
+        if (id === this.currentSongId) {
+          this.$store.dispatch("player/stopCounter");
+        } else {
+          this.currentSongId = id;
+          this.$store.dispatch("player/resetCounter");
+          this.$store.dispatch("player/startCounter");
+        }
       } else {
         $event.currentTarget.classList.add("active");
         audio.play();
+        if (id === this.currentSongId) {
+          this.$store.dispatch("player/startCounter");
+        } else {
+          this.currentSongId = id;
+          this.$store.dispatch("player/resetCounter");
+          this.$store.dispatch("player/startCounter");
+        }
 
         if (
           document.querySelector(".btn--sound").classList.contains("active")
