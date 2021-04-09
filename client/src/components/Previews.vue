@@ -1,5 +1,5 @@
 <template>
-  <section class="previews">
+  <section id="previews">
     <div class="best-sellers">
       <div class="section-title">
         <h2 class="news">Meilleures ventes</h2>
@@ -296,7 +296,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.previews {
+#previews {
   margin-top: 8rem;
 
   .best-sellers {

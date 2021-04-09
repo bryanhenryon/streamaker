@@ -381,8 +381,9 @@ export default {
       transition: 0.1s ease-in-out;
 
       &:hover {
-        background:red;
-        transform:scale(1.5);
+        background: red;
+        transform: scale(1.5);
+        border: 1px solid #fff;
       }
     }
 

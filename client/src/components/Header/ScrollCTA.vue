@@ -1,16 +1,25 @@
 <template>
   <div class="scroll-cta">
-    <div class="chevron"></div>
-    <div class="chevron"></div>
-    <div class="chevron"></div>
+    <a href="#previews" id="slideToProds">
+      <div class="chevron"></div>
+      <div class="chevron"></div>
+      <div class="chevron"></div>
+    </a>
   </div>
 </template>
 
 <style lang="scss" scoped>
+#slideToProds {
+  display: flex;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+}
+
 .scroll-cta {
   display: flex;
   justify-content: center;
-  margin-bottom: 10rem;
+  margin-bottom: 2rem;
 
   .chevron {
     position: absolute;
