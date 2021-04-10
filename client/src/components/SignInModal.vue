@@ -17,16 +17,16 @@
             <svg class="icon icon-user">
               <use xlink:href="sprite.svg#icon-user"></use>
             </svg>
-            <label for="sign-in-username" class="sign-in-modal__label"
-              >Pseudo</label
+            <label for="sign-in-email" class="sign-in-modal__label"
+              >Email</label
             >
             <input
               type="text"
-              name="username"
-              id="sign-in-username"
+              name="email"
+              id="sign-in-email"
               class="sign-in-modal__text-input"
               placeholder="Entrez votre pseudo"
-              v-model="username"
+              v-model="email"
             />
           </div>
 
@@ -65,9 +65,9 @@
           </button>
         </div>
 
-        <!-- <a href="#" class="sign-in-modal__forgotten-password"
+        <a href="#" class="sign-in-modal__forgotten-password"
           >Mot de passe oublié ?</a
-        > -->
+        >
       </div>
     </div>
   </div>
@@ -95,14 +95,14 @@ export default {
     ...mapGetters("global", {
       apiRoot: "getApiRoot"
     }),
-    ...mapFields("signInModal", ["username", "password"])
+    ...mapFields("signInModal", ["email", "password"])
   },
   methods: {
     signIn() {
       this.isLoading = true;
       axios
         .post(this.apiRoot + "users/login", {
-          username: this.username,
+          email: this.email,
           password: this.password
         })
         .then(res => {

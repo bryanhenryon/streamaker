@@ -1,7 +1,7 @@
 import { getField, updateField } from "vuex-map-fields";
 
 const state = {
-  username: null,
+  email: null,
   password: null,
   errorMessage: null
 };
@@ -13,9 +13,7 @@ const getters = {
 
 const mutations = {
   resetForm(state) {
-    (state.username = null),
-      (state.password = null),
-      (state.errorMessage = null);
+    (state.email = null), (state.password = null), (state.errorMessage = null);
   },
   setErrorMessage: (state, payload) => (state.errorMessage = payload),
   updateField

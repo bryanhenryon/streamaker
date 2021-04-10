@@ -83,9 +83,9 @@ usersSchema.methods.toJSON = function () {
 }
 
 
-usersSchema.statics.findByCredentials = async (username, password) => {
+usersSchema.statics.findByCredentials = async (email, password) => {
   const user = await Users.findOne({ 
-    username: username
+    email
    });
 
   if(!user) {

@@ -90,7 +90,7 @@ router.post("/api/users", async (req, res) => {
 
 router.post("/api/users/login", async (req, res) => {
     try {
-        const user = await Users.findByCredentials(req.body.username, req.body.password);
+        const user = await Users.findByCredentials(req.body.email, req.body.password);
         const token = createToken(user._id);
         res.status(200).send({
             user: {
