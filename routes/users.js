@@ -289,7 +289,7 @@ router.post("/api/check-reset-token/:token", async (req, res) => {
 router.patch("/api/reset-user-password/:id", async (req, res) => {
     try {
         const user = await Users.findOne({ _id: req.params.id });
-        user.password = await bcrypt.hash(req.body.newPassword, 10);
+        user.password = req.body.newPassword;
         user.save();
         res.send();
     } catch (error) {
