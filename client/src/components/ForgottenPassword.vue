@@ -56,7 +56,7 @@
           v-if="passwordResetMailSent"
           class="forgotten-password-modal__password-sent"
         >
-          Un mail de vient de vous être envoyé ! N'oubliez pas de vérifier vos
+          Un mail de réinitialisation vient de vous être envoyé ! N'oubliez pas de vérifier vos
           spams s'il n'apparait pas.
         </div>
 
