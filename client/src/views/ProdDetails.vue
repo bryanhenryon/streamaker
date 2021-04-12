@@ -52,7 +52,7 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import RollerSpinner from "../components/spinners/RollerSpinner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -78,6 +78,7 @@ export default {
     ...mapGetters("global", {
       apiRoot: "getApiRoot"
     }),
+    ...mapState(["user"]),
     prodCreationDate() {
       const date = new Date(this.prod.createdAt);
       return (
@@ -104,28 +105,33 @@ export default {
               })
               .catch(err => console.log(err));
           },
-          onApprove: data => {
-            this.isLoading = true;
-            return axios
-              .post(this.apiRoot + "paypal/capture-order/" + data.orderID)
-              .then(() => {
-                this.$store.dispatch("setPurchasedSong", {
-                  songName: this.prod.song,
-                  originalSongName: this.prod.songToDisplay
-                });
-                this.$store.dispatch("setSuccessfulTransaction", true);
-                axios.patch(this.apiRoot + "new-sale/" + this.$route.params.id);
-              })
-              .then(() => {
-                this.isLoading = false;
-                this.$router.push("/confirmation-transaction");
-              })
-              .catch(err => {
-                alert(
-                  "Il semble qu'il y ait un problème du côté de PayPal, veuillez réessayez. Réessayez ultérieurement si le problème persiste."
-                );
-                console.log(err);
+          onApprove: async data => {
+            try {
+              this.isLoading = true;
+
+              await axios.post(
+                this.apiRoot + "paypal/capture-order/" + data.orderID
+              );
+
+              this.$store.dispatch("setPurchasedSong", {
+                songName: this.prod.song,
+                originalSongName: this.prod.songToDisplay
               });
+
+              this.$store.dispatch("setSuccessfulTransaction", true);
+              await axios.patch(
+                this.apiRoot + "new-sale/" + this.$route.params.id
+              );
+
+              this.isLoading = false;
+
+              this.$router.push("/confirmation-transaction");
+            } catch (error) {
+              alert(
+                "Il semble qu'il y ait un problème du côté de PayPal, veuillez réessayez. Réessayez ultérieurement si le problème persiste."
+              );
+              console.log(error);
+            }
           }
         })
         .render(".paypal");
