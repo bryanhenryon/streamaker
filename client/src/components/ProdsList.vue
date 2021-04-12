@@ -91,9 +91,9 @@
         </div>
         <div class="bottom">
           <div class="infos">
-            <router-link :to="'/prod/' + prod._id" class="title">
+            <button @click="redirectIfConnected" class="btn title">
               {{ prod.title }}
-            </router-link>
+            </button>
             <div class="author">
               <router-link
                 class="author-profile-link"
@@ -108,8 +108,8 @@
             <div v-else class="max-streams">Max streams: illimité</div>
             <span class="format">{{ prod.format.toUpperCase() }}</span>
           </div>
-          <router-link
-            :to="'/prod/' + prod._id"
+          <button
+            @click="redirectIfConnected(prod._id)"
             class="btn btn--buy"
             :data-id="prod._id"
           >
@@ -117,7 +117,7 @@
             <svg class="icon icon-shopping-cart">
               <use xlink:href="sprite.svg#icon-shopping-cart"></use>
             </svg>
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
@@ -127,7 +127,7 @@
 <script>
 import axios from "axios";
 import "animate.css";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -147,9 +147,17 @@ export default {
     }),
     ...mapGetters("player", {
       songVolume: "getSongVolume"
-    })
+    }),
+    ...mapState(["user"])
   },
   methods: {
+    redirectIfConnected(id) {
+      if (!this.user) {
+        this.$store.dispatch("navbar/showSignInModal");
+      } else {
+        this.$router.push("/prod/" + id);
+      }
+    },
     forceRerender() {
       this.renderComponent = false;
 

@@ -22,13 +22,13 @@
           />
         </div>
         <div class="track-infos__container">
-          <router-link
+          <button
             v-if="song"
-            class="track-infos__track-name"
-            :to="'/prod/' + song.id"
+            class="btn track-infos__track-name"
+            @click="redirectIfConnected(song.id)"
           >
             {{ song.title }}
-          </router-link>
+          </button>
           <router-link
             :to="'/profil/' + song.artist"
             v-if="song"
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -110,6 +110,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(["user"]),
     ...mapGetters({
       song: "player/getPlayingSong",
       songVolume2: "player/getSongVolume",
@@ -123,12 +124,18 @@ export default {
         return this.sliderValue;
       },
       set(value) {
-        console.log("DUREE TOTALE" + this.song.target.nextSibling.duration);
         this.$store.dispatch("player/changeDuration", value);
       }
     }
   },
   methods: {
+    redirectIfConnected(id) {
+      if (!this.user) {
+        this.$store.dispatch("navbar/showSignInModal");
+      } else {
+        this.$router.push("/prod/" + id);
+      }
+    },
     play() {
       const isPlaying = this.song.target.classList.contains("active");
       if (isPlaying) {
@@ -150,8 +157,7 @@ export default {
         document.querySelector(".btn--play2").classList.add("playing");
         this.song.target.nextSibling.play();
       }
-      const slider_position = (this.song.target.nextSibling.currentTime = this.sliderValue);
-      console.log(slider_position);
+      this.song.target.nextSibling.currentTime = this.sliderValue;
     },
     loop() {
       const loopBtn = document.querySelector(".btn--loop");
@@ -455,6 +461,7 @@ export default {
         display: block;
         text-decoration: none;
         color: inherit;
+        font-size: 1.6rem;
 
         @media (max-width: 480px) {
           font-size: 1.4rem;

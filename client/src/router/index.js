@@ -37,6 +37,7 @@ const routes = [
     name: "ProdDetails",
     component: ProdDetails,
     meta: {
+      requiresAuth: true,
       title: `Détails | ${siteName}`
     }
   },

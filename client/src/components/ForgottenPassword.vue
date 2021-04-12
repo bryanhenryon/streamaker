@@ -136,7 +136,7 @@ export default {
       this.resetForgottenPasswordForm();
       this.passwordResetMailSent = false;
     },
-    showSignModal() {
+    showSignUpModal() {
       const signUpModal = document.querySelector(".sign-up-modal");
       const signUpModalContent = document.querySelector(
         ".sign-up-modal__content"

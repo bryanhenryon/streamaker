@@ -42,9 +42,9 @@
           </div>
           <div class="bottom">
             <div class="infos">
-              <router-link :to="'/prod/' + prod._id" class="title">{{
-                prod.title
-              }}</router-link>
+              <button @click="redirectIfConnected(prod._id)" class="btn title">
+                {{ prod.title }}
+              </button>
               <div class="author">
                 <router-link
                   class="author-profile-link"
@@ -59,8 +59,8 @@
               <div v-else class="max-streams">Max streams: illimité</div>
               <span class="format">{{ prod.format.toUpperCase() }}</span>
             </div>
-            <router-link
-              :to="'/prod/' + prod._id"
+            <button
+              @click="redirectIfConnected(prod._id)"
               class="btn btn--buy"
               :data-id="prod._id"
             >
@@ -68,7 +68,7 @@
               <svg class="icon icon-shopping-cart">
                 <use xlink:href="sprite.svg#icon-shopping-cart"></use>
               </svg>
-            </router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -115,9 +115,9 @@
           </div>
           <div class="bottom">
             <div class="infos">
-              <router-link :to="'/prod/' + prod._id" class="title">{{
-                prod.title
-              }}</router-link>
+              <button @click="redirectIfConnected(prod._id)" class="btn title">
+                {{ prod.title }}
+              </button>
               <div class="author">
                 <router-link
                   class="author-profile-link"
@@ -132,8 +132,8 @@
               <div v-else class="max-streams">Max streams: illimité</div>
               <span class="format">{{ prod.format.toUpperCase() }}</span>
             </div>
-            <router-link
-              :to="'/prod/' + prod._id"
+            <button
+              @click="redirectIfConnected(prod._id)"
               class="btn btn--buy"
               :data-id="prod._id"
             >
@@ -141,7 +141,7 @@
               <svg class="icon icon-shopping-cart">
                 <use xlink:href="sprite.svg#icon-shopping-cart"></use>
               </svg>
-            </router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 import Player from "../components/Player";
 
@@ -173,12 +173,20 @@ export default {
     }),
     ...mapGetters("player", {
       songVolume: "getSongVolume"
-    })
+    }),
+    ...mapState(["user"])
   },
   components: {
     "app-player": Player
   },
   methods: {
+    redirectIfConnected(id) {
+      if (!this.user) {
+        this.$store.dispatch("navbar/showSignInModal");
+      } else {
+        this.$router.push("/prod/" + id);
+      }
+    },
     kFormatter(num) {
       return Math.abs(num) > 999
         ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"

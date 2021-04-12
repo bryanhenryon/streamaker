@@ -186,9 +186,9 @@
           </div>
           <div class="bottom">
             <div class="infos">
-              <router-link :to="'/prod/' + prod._id" class="title">
+              <button @click="redirectIfConnected(prod._id)" class="btn title">
                 {{ prod.title }}
-              </router-link>
+              </button>
               <div class="author">
                 <router-link
                   class="author-profile-link"
@@ -203,8 +203,8 @@
               <div v-else class="max-streams">Max streams: illimité</div>
               <span class="format">{{ prod.format.toUpperCase() }}</span>
             </div>
-            <router-link
-              :to="'/prod/' + prod._id"
+            <button
+              @click="redirectIfConnected(prod._id)"
               class="btn btn--buy"
               :data-id="prod._id"
             >
@@ -212,7 +212,7 @@
               <svg class="icon icon-shopping-cart">
                 <use xlink:href="sprite.svg#icon-shopping-cart"></use>
               </svg>
-            </router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -266,6 +266,13 @@ export default {
     }
   },
   methods: {
+    redirectIfConnected(id) {
+      if (!this.sessionUser) {
+        this.$store.dispatch("navbar/showSignInModal");
+      } else {
+        this.$router.push("/prod/" + id);
+      }
+    },
     forceRerender() {
       this.renderComponent = false;
 
